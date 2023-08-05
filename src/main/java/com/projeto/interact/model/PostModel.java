@@ -22,10 +22,10 @@ public class PostModel {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserModel user;
 
-    //definir como sera a relação do post
-//    @OneToMany
-//    private List<PostModel> awnsers = new ArrayList<>();
-    //vai ser lista de CommentModels
+
+    @OneToMany(mappedBy = "post")
+    private List<CommentModel> comments;
+
 
 
 }
