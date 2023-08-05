@@ -45,8 +45,12 @@ public class UserModel {
 
     @ManyToMany
     @JoinTable(
-            name = "user_boards", joinColumns = @JoinColumn(name = "users", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "badges", referencedColumnName = "id"))
+            name = "user_boards", joinColumns = @JoinColumn(name = "users", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "badges", referencedColumnName = "board_id"))
     private List<BoardModel> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<PostModel> posts;
+
 
 }
