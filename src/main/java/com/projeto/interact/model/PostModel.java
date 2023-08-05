@@ -18,8 +18,14 @@ public class PostModel {
 
     private String text;
 
-    @OneToMany
-    private List<PostModel> awnsers = new ArrayList<>();
+    //um usuario pode fazer mtos posts
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserModel user;
+
+    //definir como sera a relação do post
+//    @OneToMany
+//    private List<PostModel> awnsers = new ArrayList<>();
+    //vai ser lista de CommentModels
 
 
 }
