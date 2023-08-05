@@ -2,8 +2,17 @@ package com.projeto.interact.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name= "users")
 @Entity
 public class UserModel {
     @Id
@@ -14,12 +23,30 @@ public class UserModel {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", length = 25)
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Column(name ="pontuacao")
+    private int pontuacao;
 
+    @Column(name = "monitor")
+    private boolean monitor;
+
+    public UserModel(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.pontuacao = 0;
+        this.monitor = false;
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_boards", joinColumns = @JoinColumn(name = "users", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "badges", referencedColumnName = "id"))
+    private List<BoardModel> boards = new ArrayList<>();
 
 }
