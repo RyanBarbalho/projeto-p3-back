@@ -19,20 +19,20 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
     private Long id;
-    
-    @Column(name = "email")
-    private String email;
 
-    @Column(name = "username", length = 25)
+    @Column(nullable = false, length = 25)
     private String username;
 
-    @Column(name = "password")
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
-    @Column(name ="pontuacao")
+    @Column(name ="score")
     private int pontuacao;
 
-    @Column(name = "monitor")
+    @Column(name="role")
     private boolean monitor;
 
     public UserModel(String email, String username, String password) {
