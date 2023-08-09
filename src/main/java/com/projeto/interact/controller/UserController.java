@@ -1,0 +1,63 @@
+package com.projeto.interact.controller;
+
+import com.projeto.interact.DTO.UserRegsDTO;
+import com.projeto.interact.exceptions.RegisterException;
+import com.projeto.interact.model.UserModel;
+import com.projeto.interact.service.UserService;
+import com.projeto.interact.utils.DataBaseUtil;
+import com.projeto.interact.utils.Json;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    private final UserService service;
+
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    UserModel create(UserModel user){
+        return service.create(user);
+    }
+
+
+
+    List<UserModel> findAllByUsername(String username){
+        return service.findAllByUsername(username);
+    }
+
+    @GetMapping("/{id}")
+    UserModel getUser(@PathVariable Long id){
+        return service.getUser(id);
+    }
+
+    @GetMapping ("/{username}")
+    public UserModel findByUsername(@PathVariable String username) {
+        return service.findByUsername(username);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteUser(@PathVariable Long id){
+        service.deleteUser(id);
+    }
+
+    //register
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<?> register(@RequestBody UserRegsDTO dto) throws RegisterException {
+        return service.register(dto);
+    }
+    //login
+
+    //post
+
+    //comment
+
+}
