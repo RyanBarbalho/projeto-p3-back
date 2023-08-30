@@ -4,8 +4,6 @@ import com.projeto.interact.DTO.UserRegsDTO;
 import com.projeto.interact.exceptions.RegisterException;
 import com.projeto.interact.model.UserModel;
 import com.projeto.interact.service.UserService;
-import com.projeto.interact.utils.DataBaseUtil;
-import com.projeto.interact.utils.Json;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +26,6 @@ public class UserController {
     }
 
 
-
     List<UserModel> findAllByUsername(String username){
         return service.findAllByUsername(username);
     }
@@ -49,11 +46,7 @@ public class UserController {
     }
 
     //register
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<?> register(@RequestBody UserRegsDTO dto) throws RegisterException {
-        return service.register(dto);
-    }
+
     //login
 
     //post

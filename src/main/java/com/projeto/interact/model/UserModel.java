@@ -17,14 +17,14 @@ import java.util.List;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
+    @Column(name="user_id",unique = true)
     private Long id;
 
     @Column(nullable = false, length = 25)
     private String username;
 
-    @Column(nullable = false)
-    private String email;
+    @Column(nullable = false, unique = true)
+    private String login;
 
     @Column(nullable = false)
     private String password;
@@ -33,14 +33,14 @@ public class UserModel {
     private int pontuacao;
 
     @Column(name="role")
-    private boolean monitor;
+    private UserRole role;
 
-    public UserModel(String email, String username, String password) {
-        this.email = email;
+    public UserModel(String login, String username, String password, UserRole role) {
+        this.login = login;
         this.username = username;
         this.password = password;
         this.pontuacao = 0;
-        this.monitor = false;
+        this.role = role;
     }
 
     @ManyToMany

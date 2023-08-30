@@ -1,15 +1,11 @@
 package com.projeto.interact.service.implementation;
 
-import com.projeto.interact.DTO.UserRegsDTO;
-import com.projeto.interact.exceptions.RegisterException;
 import com.projeto.interact.model.UserModel;
 import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.UserService;
-import com.projeto.interact.utils.DataBaseUtil;
-import com.projeto.interact.utils.Json;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,32 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel findByUsername(String username) {
-        return userRepository.findUserModelByUsername(username);
+        return userRepository.findByUsername(username);
     }
-
-    //register user
-    @Override
-    public ResponseEntity<?> register(UserRegsDTO dto) throws RegisterException {
-        UserModel user = new UserModel(dto.getEmail() ,dto.getUsername(), dto.getPassword());
-        Json json = new Json();
-        try {
-            //verifica se há outro com o mesmo nome
-            List<UserModel> registeredUsers = userRepository.findAllByUsername(user.getUsername());
-
-            DataBaseUtil.insertCheck(registeredUsers, "User already registered");
-            //se o usuario ja estiver cadastrado, lança exception, se nao insere
-
-            userRepository.save(user);
-            json.put("status", "created");
-        } catch (RegisterException e) {//por enquanto o register Exception ta saindo null
-            throw new RegisterException(e.getMessage());
-        }
-        return ResponseEntity.ok().body(json.toJson());
-    }
-    //login user
-
-
-    //post Post
+    //post
 
     //post comment
 }

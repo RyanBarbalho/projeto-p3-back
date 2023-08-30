@@ -19,6 +19,7 @@ public class BoardModel{
     private Long id;
     @Column(name="board_name")
     private String name;
+
     @OneToMany
     private List<PostModel> posts;
 
