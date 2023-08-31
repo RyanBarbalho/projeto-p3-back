@@ -1,9 +1,6 @@
 package com.projeto.interact.service;
 
-import com.projeto.interact.DTO.UserRegsDTO;
-import com.projeto.interact.exceptions.RegisterException;
 import com.projeto.interact.model.UserModel;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -17,4 +14,6 @@ public interface UserService {
     UserModel getUser(Long id);
 
     UserModel findByUsername(String username);
+
+    List<UserModel> findAll();
 }

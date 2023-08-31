@@ -25,6 +25,11 @@ public class UserController {
         return service.create(user);
     }
 
+    @GetMapping
+    public ResponseEntity getAllUsers(){
+        List<UserModel> userList = service.findAll();
+        return ResponseEntity.ok(userList);
+    }
 
     List<UserModel> findAllByUsername(String username){
         return service.findAllByUsername(username);
