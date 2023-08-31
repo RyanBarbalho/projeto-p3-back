@@ -1,6 +1,6 @@
 package com.projeto.interact.service.implementation;
 
-import com.projeto.interact.model.BoardModel;
+import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.service.BoardService;
 import org.springframework.data.jpa.repository.JpaRepository;

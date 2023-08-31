@@ -1,6 +1,6 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.model.BoardModel;
+import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.service.BoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

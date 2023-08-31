@@ -1,6 +1,6 @@
 package com.projeto.interact.respository;
 
-import com.projeto.interact.model.BoardModel;
+import com.projeto.interact.domain.BoardModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

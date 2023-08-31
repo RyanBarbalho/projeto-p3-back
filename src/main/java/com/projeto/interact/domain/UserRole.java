@@ -1,4 +1,4 @@
-package com.projeto.interact.model;
+package com.projeto.interact.domain;
 
 import lombok.Getter;
 

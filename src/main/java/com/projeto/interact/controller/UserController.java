@@ -1,8 +1,6 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.DTO.UserRegsDTO;
-import com.projeto.interact.exceptions.RegisterException;
-import com.projeto.interact.model.UserModel;
+import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

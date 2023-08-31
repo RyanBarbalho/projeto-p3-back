@@ -1,4 +1,4 @@
-package com.projeto.interact.model;
+package com.projeto.interact.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

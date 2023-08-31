@@ -1,6 +1,6 @@
 package com.projeto.interact.service;
 
-import com.projeto.interact.model.BoardModel;
+import com.projeto.interact.domain.BoardModel;
 
 import java.util.List;
 
