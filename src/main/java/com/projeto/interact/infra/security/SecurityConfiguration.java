@@ -1,5 +1,6 @@
-package com.projeto.interact.config;
+package com.projeto.interact.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,31 +14,36 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    @Autowired
+    SecurityFilter securityFilter;
+
     @Bean
     MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector){
         return new MvcRequestMatcher.Builder(introspector);
-    }
+    } //esse metodo vai ser usado para criar os matchers das requisiçoes que eu quero permitir
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, MvcRequestMatcher.Builder mvc) throws Exception {
         httpSecurity
                 .headers(header -> header
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)) //permitir o acesso ao h2 console
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //nao guarda informaçoes de sessao = nao guarda estado
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, ("/auth/login")).permitAll() //qualquer um pode fazer login
-                        .requestMatchers((HttpMethod.POST), "/auth/register").permitAll() //por enquanto, para teste, pois tem a parada do role como vai ficar
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/auth/login")).permitAll() //qualquer um pode fazer login
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/auth/register")).permitAll() //por enquanto, para teste, pois tem a parada do role como vai ficar
                         .anyRequest().authenticated() //permitir acesso a todos por enquanto
                 )
-                .csrf(AbstractHttpConfigurer::disable); //desabilitar o csrf -> cross site request forgery bloqueia as requisições de outros sites
+                .csrf(AbstractHttpConfigurer::disable) //desabilitar o csrf -> cross site request forgery bloqueia as requisições de outros sites
+                //fazer verificaçao do token
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 

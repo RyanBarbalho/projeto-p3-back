@@ -1,8 +1,10 @@
 package com.projeto.interact.controller.authentication;
 
 import com.projeto.interact.domain.DTO.AuthenticationDTO;
+import com.projeto.interact.domain.DTO.LoginResponseDTO;
 import com.projeto.interact.domain.DTO.RegisterDTO;
 import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.infra.security.TokenService;
 import com.projeto.interact.respository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     //login
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO dto){
@@ -32,10 +37,12 @@ public class AuthenticationController {
         //se for igual, retorna o token
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         //bcrypt vai criptografar e comparar com a senha ja criptografada no bd
-        var authentication = authenticationManager.authenticate(usernamePassword);
+        var authentication = this.authenticationManager.authenticate(usernamePassword);
 
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((UserModel)authentication.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));//quando logar vai receber o token
 
     }
 
