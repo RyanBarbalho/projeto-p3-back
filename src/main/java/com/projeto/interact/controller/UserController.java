@@ -19,7 +19,7 @@ public class UserController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    UserModel create(UserModel user){
+    UserModel create(@RequestBody UserModel user){
         return service.create(user);
     }
 
