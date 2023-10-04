@@ -19,6 +19,8 @@ public class BoardModel{
     private Long id;
     @Column(name="board_name")
     private String name;
+    @Column(name="board_period")
+    private String period;
 
     @OneToMany
     private List<PostModel> posts;
@@ -29,6 +31,8 @@ public class BoardModel{
     private List<UserModel> users = new ArrayList<>();
 
     public BoardModel(String name) {
+
         this.name = name;
+        this.period = "1";
     }
 }

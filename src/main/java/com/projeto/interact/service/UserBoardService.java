@@ -28,4 +28,9 @@ public class UserBoardService {
         user.getBoards().addAll(boards);
         userRepository.save(user);
     }
+
+    public List<BoardModel> getUserBoardsByUsername(String username) {
+        UserModel user = userRepository.findByUsername(username);
+        return user.getBoards();
+    }
 }

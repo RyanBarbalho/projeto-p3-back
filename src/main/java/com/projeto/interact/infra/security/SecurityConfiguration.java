@@ -47,7 +47,6 @@ public class SecurityConfiguration {
                 )
                 .csrf(AbstractHttpConfigurer::disable) //desabilitar o csrf -> cross site request forgery bloqueia as requisiÃ§Ãµes de outros sites
                 .cors(withDefaults())
-
                 .httpBasic(withDefaults());
         //verifica o token antes de fazer a requisicao
         httpSecurity.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

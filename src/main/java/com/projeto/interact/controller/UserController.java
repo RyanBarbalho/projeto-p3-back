@@ -1,5 +1,6 @@
 package com.projeto.interact.controller;
 
+import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.DTO.AddBoardsDTO;
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.service.UserBoardService;
@@ -53,13 +54,17 @@ public class UserController {
 
     @PostMapping("/addboards")
     public ResponseEntity addBoards(@RequestBody AddBoardsDTO userBoards) {
+        System.out.println("teste");
+        System.out.println(userBoards.username());
+        System.out.println(userBoards.boardIds());
         userBoardService.addBoardsToUser(userBoards.username(), userBoards.boardIds());
-        return ResponseEntity.ok("test");
+        return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(userBoards.username()));
     }
 
-    //register
-
-    //login
+    @GetMapping("/{username}/boards")
+    public ResponseEntity getUserBoardsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(username));
+    }
 
     //post
 
