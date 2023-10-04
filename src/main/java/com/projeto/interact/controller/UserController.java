@@ -1,6 +1,9 @@
 package com.projeto.interact.controller;
 
+import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.DTO.AddBoardsDTO;
 import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.service.UserBoardService;
 import com.projeto.interact.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +15,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService service;
+    private final UserBoardService userBoardService;
 
-
-    public UserController(UserService service) {
+    public UserController(UserService service, UserBoardService userBoardService) {
         this.service = service;
+        this.userBoardService = userBoardService;
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,9 +52,19 @@ public class UserController {
         service.deleteUser(id);
     }
 
-    //register
+    @PostMapping("/addboards")
+    public ResponseEntity addBoards(@RequestBody AddBoardsDTO userBoards) {
+        System.out.println("teste");
+        System.out.println(userBoards.username());
+        System.out.println(userBoards.boardIds());
+        userBoardService.addBoardsToUser(userBoards.username(), userBoards.boardIds());
+        return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(userBoards.username()));
+    }
 
-    //login
+    @GetMapping("/{username}/boards")
+    public ResponseEntity getUserBoardsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(username));
+    }
 
     //post
 

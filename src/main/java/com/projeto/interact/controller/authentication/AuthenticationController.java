@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +43,9 @@ public class AuthenticationController {
 
         var token = tokenService.generateToken((UserModel)authentication.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));//quando logar vai receber o token
+        UserDetails user = userRepository.findByLogin(dto.login());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername()));//quando logar vai receber o token
 
     }
 

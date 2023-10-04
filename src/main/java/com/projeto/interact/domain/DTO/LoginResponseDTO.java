@@ -1,4 +1,4 @@
 package com.projeto.interact.domain.DTO;
 
-public record LoginResponseDTO(String token) {
+public record LoginResponseDTO(String token, String username) {
 }
