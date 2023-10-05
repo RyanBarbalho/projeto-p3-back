@@ -1,9 +1,8 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.DTO.AddBoardsDTO;
 import com.projeto.interact.domain.UserModel;
-import com.projeto.interact.service.UserBoardService;
+import com.projeto.interact.service.implementation.UserBoardService;
 import com.projeto.interact.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

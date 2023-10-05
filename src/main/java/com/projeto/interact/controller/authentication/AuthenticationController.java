@@ -33,7 +33,7 @@ public class AuthenticationController {
 
     //login
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO dto){
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO dto){
         //criptografar a senha, salvar no bd, comparar com a q tem no bd
         //se for igual, retorna o token
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
@@ -50,10 +50,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO dto){
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO dto){
         if(this.userRepository.findByLogin(dto.login())!= null){
             return ResponseEntity.badRequest().build();
         }
+        //verifica se o login (email) pertence a @ic.ufal.br
+        //insere mensagem de erro caso nao pertenca
+        if(!dto.login().contains("@ic.ufal.br")){
+            //retorna mensagem de erro customizada
+            return ResponseEntity.badRequest().body("Email invalido, deve pertencer ao dominio @ic.ufal.br.");
+        }
+
         //salva senha criptografada
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
         UserModel newUser = new UserModel(dto.login(), dto.name(), encryptedPassword, dto.role());
