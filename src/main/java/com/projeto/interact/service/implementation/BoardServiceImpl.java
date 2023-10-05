@@ -10,14 +10,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static com.projeto.interact.utils.FindEntityUtil.findEntityById;
+
 @Service
 public class BoardServiceImpl implements BoardService {
-
-    //funcao para encontrar qualquer entidade e enviar mensagem de erro em caso de exception
-    private <T> T findEntityById(JpaRepository<T, Long> repository, Long entityId) {
-        return repository.findById(entityId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "board not found" + " with ID: " + entityId));
-    }
 
     private final BoardRepository boardRepository;
 
@@ -42,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardModel getBoard(long id) {
-        return findEntityById(boardRepository, id);
+        return findEntityById(boardRepository, id, "board");
     }
 
     @Override

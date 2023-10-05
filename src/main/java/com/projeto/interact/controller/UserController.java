@@ -27,14 +27,15 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity getAllUsers(){
+    public ResponseEntity<?> getAllUsers(){
         List<UserModel> userList = service.findAll();
         return ResponseEntity.ok(userList);
     }
 
+    /*comentei pq n sei nem pq criei esse metodo.
     List<UserModel> findAllByUsername(String username){
-        return service.findAllByUsername(username);
-    }
+    return service.findAllByUsername(username);
+    }*/
 
     @GetMapping("/{id}")
     UserModel getUser(@PathVariable Long id){
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/addboards")
-    public ResponseEntity addBoards(@RequestBody AddBoardsDTO userBoards) {
+    public ResponseEntity<?> addBoards(@RequestBody AddBoardsDTO userBoards) {
         System.out.println("teste");
         System.out.println(userBoards.username());
         System.out.println(userBoards.boardIds());
@@ -61,12 +62,9 @@ public class UserController {
     }
 
     @GetMapping("/{username}/boards")
-    public ResponseEntity getUserBoardsByUsername(@PathVariable String username) {
+    public ResponseEntity<?> getUserBoardsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(username));
     }
 
-    //post
-
-    //comment
 
 }
