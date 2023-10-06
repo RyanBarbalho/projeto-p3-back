@@ -16,6 +16,9 @@ public class CommentModel {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "score")
+    private Integer score;
+
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private UserModel user; //autor do comentario

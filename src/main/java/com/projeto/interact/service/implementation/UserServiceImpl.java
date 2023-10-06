@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
     public UserModel findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-    //post
 
-    //post comment
+
 }
