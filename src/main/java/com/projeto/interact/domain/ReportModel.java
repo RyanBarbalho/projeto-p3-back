@@ -30,17 +30,15 @@ public class ReportModel {
     private String description;
 
     @Column(name = "id_post")
-    private String idPost;
+    private Long idPost;
 
     @Column(name = "id_comment")
-    private String idComment;
+    private Long idComment;
 
-    //muitos ususarios podem fazer muitas denuncias em posts diferentes
-    @ManyToMany
-    @JoinTable(
-            name = "user_reports", joinColumns = @JoinColumn(name = "reports", referencedColumnName = "report_id"),
-            inverseJoinColumns = @JoinColumn(name = "users", referencedColumnName = "user_id"))
-    private List<UserModel> users = new ArrayList<>();
+    //report so possui um user
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
     public void setId(Long id) {
         this.id = id;
