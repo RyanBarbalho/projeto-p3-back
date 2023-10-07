@@ -22,4 +22,7 @@ public interface PostService {
     PostModel downvotePost(long id);
 
     PostModel createComment(long id, CommentModel comment);
+
+    //get all comments
+    List<CommentModel> getAllComments(long id);
 }

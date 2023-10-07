@@ -6,6 +6,8 @@ import com.projeto.interact.service.implementation.PostServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -50,5 +52,11 @@ public class PostController {
     @PostMapping("/{id}/comments")
     public PostModel createComment(@PathVariable Long id, @RequestBody CommentModel comment){
         return service.createComment(id, comment);
+    }
+
+    //getComments
+    @GetMapping("/{id}/comments")
+    public List<CommentModel> getAllComments(@PathVariable Long id){
+        return service.getAllComments(id);
     }
 }

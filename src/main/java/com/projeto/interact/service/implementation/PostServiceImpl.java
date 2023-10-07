@@ -2,6 +2,7 @@ package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.CommentModel;
 import com.projeto.interact.domain.PostModel;
+import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.service.PostService;
 import com.projeto.interact.utils.FindEntityUtil;
@@ -12,9 +13,12 @@ import java.util.List;
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
-    public PostServiceImpl(PostRepository postRepository) {
+
+    public PostServiceImpl(PostRepository postRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -59,4 +63,12 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
         return post;
     }
+
+    @Override
+    public List<CommentModel> getAllComments(long id) {
+        //vai fazer a requisição de todos os commentarios do post e eles estarão ordenados pelo score.
+        return commentRepository.findAllByPostIdOrderByScoreDesc(id);
+    }
+
+
 }
