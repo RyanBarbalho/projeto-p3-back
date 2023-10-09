@@ -1,6 +1,7 @@
 package com.projeto.interact.controller;
 
 import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.PostModel;
 import com.projeto.interact.service.BoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,12 @@ public class BoardController {
     @GetMapping("/{name}")
     public BoardModel findByName(@PathVariable String name) {
         return service.findByName(name);
+    }
+
+    @PostMapping("/{id}/posts")
+    @ResponseStatus(HttpStatus.CREATED)
+    public BoardModel createPost(@PathVariable Long id, @RequestBody PostModel post) {
+        service.createPost(id, post);
+        return service.getBoard(id); //coloquei pra testar, possivelmente dara pra retirar isso
     }
 }

@@ -9,14 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static com.projeto.interact.utils.FindEntityUtil.findEntityById;
+
 @Service
 public class UserServiceImpl implements UserService {
-
-    private <T> T findEntityById(JpaRepository<T, Long> repository, Long entityId) {
-        //funcao para encontrar qualquer entidade e enviar mensagem de erro em caso de exception
-        return repository.findById(entityId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found" + " with ID: " + entityId));
-    }
 
     private final UserRepository userRepository;
 
@@ -44,14 +41,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel getUser(Long id){
-        return findEntityById(userRepository, id);
+        return findEntityById(userRepository, id, "user");
     }
 
     @Override
     public UserModel findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-    //post
 
-    //post comment
+
 }

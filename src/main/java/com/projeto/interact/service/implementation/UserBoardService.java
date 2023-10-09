@@ -1,4 +1,4 @@
-package com.projeto.interact.service;
+package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.UserModel;
