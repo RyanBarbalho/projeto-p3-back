@@ -52,6 +52,9 @@ public class BoardServiceImpl implements BoardService {
         BoardModel board = findEntityById(boardRepository, id, "board");
         post.setBoard(board);
         postRepository.save(post);
+        //insert post at board
+        board.getPosts().add(post);
+        boardRepository.save(board);
     }
 
 }

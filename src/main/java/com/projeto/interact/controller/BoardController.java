@@ -47,6 +47,6 @@ public class BoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public BoardModel createPost(@PathVariable Long id, @RequestBody PostModel post) {
         service.createPost(id, post);
-        return service.getBoard(id); //coloquei pra testar, possivelmente dara pra retirar isso
+        return service.getBoard(id);
     }
 }
