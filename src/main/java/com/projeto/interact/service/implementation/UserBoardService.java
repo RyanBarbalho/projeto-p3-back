@@ -1,6 +1,7 @@
 package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.DTO.CreatePostDTO;
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.respository.UserRepository;

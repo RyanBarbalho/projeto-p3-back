@@ -1,8 +1,12 @@
 package com.projeto.interact.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,18 +17,25 @@ public class PostModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(name = "title", length = 100)
     private String title;
 
-    @Column(name = "text", length = 1000)
+    @Setter
+    @Column(name = "text", length = 1000000)
     private String text;
 
     @Column(name = "score")
-    private Integer score;
+    private Integer score = 0;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date")
+    private Date date;
 
     //um usuario pode fazer mtos posts
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private UserModel user;
 
 
@@ -32,8 +43,6 @@ public class PostModel {
     private List<CommentModel> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private BoardModel board;
-
-
-
 }

@@ -1,9 +1,18 @@
 package com.projeto.interact.controller;
 
+import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.CommentModel;
+import com.projeto.interact.domain.DTO.CreateCommentDTO;
+import com.projeto.interact.domain.DTO.CreatePostDTO;
 import com.projeto.interact.domain.PostModel;
+import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.service.BoardService;
+import com.projeto.interact.service.CommentService;
+import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.PostServiceImpl;
+import com.projeto.interact.utils.FindEntityUtil;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,17 +21,19 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     PostServiceImpl service;
+    UserService userService;
+    BoardService boardService;
 
-    public PostController(PostServiceImpl service) {
+    CommentService commentService;
+
+
+    public PostController(PostServiceImpl service, UserService userService, BoardService boardService, CommentService commentService) {
         this.service = service;
+        this.userService = userService;
+        this.boardService = boardService;
+        this.commentService =commentService;
     }
 
-
-    @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createPost(@RequestBody PostModel postModel){
-        service.create(postModel);
-    }
 
     //getPOST
     @GetMapping("/{id}")
@@ -50,7 +61,11 @@ public class PostController {
 
     //createComment
     @PostMapping("/{id}/comments")
-    public PostModel createComment(@PathVariable Long id, @RequestBody CommentModel comment){
+    public PostModel createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
+        CommentModel comment = new CommentModel();
+        comment.setUser(userService.findByUsername(dto.username()));
+        comment.setPost(FindEntityUtil.findEntityById());
+        comment.setText(dto.text());
         return service.createComment(id, comment);
     }
 
@@ -58,5 +73,10 @@ public class PostController {
     @GetMapping("/{id}/comments")
     public List<CommentModel> getAllComments(@PathVariable Long id){
         return service.getAllComments(id);
+    }
+
+    @GetMapping("/board/{id}")
+    public List<PostModel> getAllById(@PathVariable Long id) {
+        return service.findByBoardId(id);
     }
 }

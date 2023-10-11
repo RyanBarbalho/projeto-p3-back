@@ -2,6 +2,9 @@ package com.projeto.interact.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 
 @Data
@@ -18,6 +21,11 @@ public class CommentModel {
 
     @Column(name = "score")
     private Integer score;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date")
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)

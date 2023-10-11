@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostServiceImpl implements PostService {
+public class
+PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
@@ -23,7 +24,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostModel create(PostModel post) {
-
         return postRepository.save(post);
     }
 
@@ -70,5 +70,5 @@ public class PostServiceImpl implements PostService {
         return commentRepository.findAllByPostIdOrderByScoreDesc(id);
     }
 
-
+    public List<PostModel> findByBoardId (Long boardId) { return postRepository.findByBoardId(boardId); }
 }
