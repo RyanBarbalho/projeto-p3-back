@@ -59,8 +59,8 @@ PostServiceImpl implements PostService {
     @Override
     public PostModel createComment(long id, CommentModel comment) {
         PostModel post = FindEntityUtil.findEntityById(postRepository, id, "post");
-        post.getComments().add(comment);
-        postRepository.save(post);
+        comment.setPost(post);
+        commentRepository.save(comment);
         return post;
     }
 

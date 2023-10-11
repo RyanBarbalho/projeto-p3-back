@@ -1,5 +1,6 @@
 package com.projeto.interact.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,12 +29,14 @@ public class CommentModel {
     private Date date;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id", nullable = false)
-    private UserModel user; //autor do comentario
+    private UserModel user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="post_id", nullable = false)
-    private PostModel post;//post do comentarios
+    private PostModel post;
 
 
 }

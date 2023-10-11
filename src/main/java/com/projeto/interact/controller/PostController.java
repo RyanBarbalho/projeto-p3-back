@@ -61,12 +61,12 @@ public class PostController {
 
     //createComment
     @PostMapping("/{id}/comments")
-    public PostModel createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
+    public ResponseEntity createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
         CommentModel comment = new CommentModel();
         comment.setUser(userService.findByUsername(dto.username()));
-        comment.setPost(FindEntityUtil.findEntityById());
         comment.setText(dto.text());
-        return service.createComment(id, comment);
+        service.createComment(id, comment);
+        return ResponseEntity.ok().build();
     }
 
     //getComments
