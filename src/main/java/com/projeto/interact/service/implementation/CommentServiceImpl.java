@@ -1,7 +1,10 @@
 package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.CommentModel;
+import com.projeto.interact.domain.CommentVoteModel;
 import com.projeto.interact.respository.CommentRepository;
+import com.projeto.interact.respository.CommentVoteRepository;
+import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.CommentService;
 import com.projeto.interact.utils.FindEntityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +16,13 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     final CommentRepository commentRepository;
+    final UserRepository userRepository;
+    final CommentVoteRepository commentVoteRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository,CommentVoteRepository commentVoteRepository) {
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+        this.commentVoteRepository = commentVoteRepository;
     }
 
 
@@ -35,22 +42,57 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentModel upvoteComment(long id) {
-        CommentModel comment = FindEntityUtil.findEntityById(commentRepository, id, "comment");
-        comment.setScore(comment.getScore() + 1);
-        return commentRepository.save(comment);
+    public CommentModel upvoteComment(Long commentId, Long userId) {
+        CommentModel comment = commentRepository.findById(commentId).orElse(null);
+        if (comment != null) {
+            boolean userHasVoted = checkIfUserHasVoted(comment, userId);
+
+            if (!userHasVoted) {
+                comment.setScore(comment.getScore() + 1);
+                commentRepository.save(comment);
+
+                CommentVoteModel vote = new CommentVoteModel();
+                vote.setComment(comment);
+                vote.setUser(userRepository.findById(userId).orElse(null));
+                vote.setVoteType(1); // 1 for upvote
+                commentVoteRepository.save(vote);
+            }
+        }
+
+        return comment;
     }
 
     @Override
-    public CommentModel downvoteComment(long id) {
-        CommentModel comment = FindEntityUtil.findEntityById(commentRepository, id, "comment");
-        comment.setScore(comment.getScore() - 1);
-        return commentRepository.save(comment);
+    public CommentModel downvoteComment(Long commentId, Long userId) {
+        CommentModel comment = commentRepository.findById(commentId).orElse(null);
+        if (comment != null) {
+            boolean userHasVoted = checkIfUserHasVoted(comment, userId);
+
+            if (!userHasVoted) {
+                comment.setScore(comment.getScore() - 1);
+                commentRepository.save(comment);
+
+                CommentVoteModel vote = new CommentVoteModel();
+                vote.setComment(comment);
+                vote.setUser(userRepository.findById(userId).orElse(null));
+                vote.setVoteType(-1);
+                commentVoteRepository.save(vote);
+            }
+        }
+
+        return comment;
     }
 
-    //para pegar todos os comentarios de um post
     @Override
     public List<CommentModel> getAllByPostId(long id) {
         return commentRepository.findAllByPostId(id);
+    }
+
+    @Override
+    public boolean checkIfUserHasVoted(CommentModel comment, Long userId) {
+        List<CommentVoteModel> votes = comment.getVotes();
+
+        return votes.stream()
+                .anyMatch(vote -> vote.getUser().getId().equals(userId));
     }
 }

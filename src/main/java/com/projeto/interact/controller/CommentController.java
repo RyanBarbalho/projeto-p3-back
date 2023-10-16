@@ -1,6 +1,7 @@
 package com.projeto.interact.controller;
 
 import com.projeto.interact.domain.CommentModel;
+import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.CommentServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,12 @@ import java.util.List;
 public class CommentController {
 
     CommentServiceImpl service;
+    UserService userService;
 
-    public CommentController(CommentServiceImpl service) {
+    public CommentController(CommentServiceImpl service, UserService userService) {
+
         this.service = service;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
@@ -26,14 +30,16 @@ public class CommentController {
         service.deleteComment(id);
     }
 
-    @PutMapping("/{id}/upvote")
-    public CommentModel upvoteComment(@PathVariable Long id){
-        return service.upvoteComment(id);
+    @PostMapping("/upvote/{commentId}/{username}")
+    public CommentModel upvoteComment(@PathVariable Long commentId,@PathVariable String username){
+        Long userId = userService.findByUsername(username).getId();
+        return service.upvoteComment(commentId, userId);
     }
 
-    @PutMapping("/{id}/downvote")
-    public CommentModel downvoteComment(@PathVariable Long id){
-        return service.downvoteComment(id);
+    @PostMapping("/downvote/{commentId}/{username}")
+    public CommentModel downvoteComment(@PathVariable Long commentId,@PathVariable String username){
+        Long userId = userService.findByUsername(username).getId();
+        return service.downvoteComment(commentId, userId);
     }
 
     @GetMapping("/posts/{id}")

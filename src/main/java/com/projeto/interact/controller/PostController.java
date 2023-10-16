@@ -48,15 +48,17 @@ public class PostController {
     }
 
     //upvotePOST
-    @PutMapping("/{id}/upvote")
-    public PostModel upvotePost(@PathVariable Long id){
-        return service.upvotePost(id);
+    @PutMapping("/upvote/{postId}/{username}")
+    public PostModel upvotePost(@PathVariable Long postId, @PathVariable String username){
+        Long userId = userService.findByUsername(username).getId();
+        return service.upvotePost(postId, userId);
     }
 
     //downvotePOST
-    @PutMapping("/{id}/downvote")
-    public PostModel downvotePost(@PathVariable Long id){
-        return service.downvotePost(id);
+    @PutMapping("/downvote/{postId}/{username}")
+    public PostModel downvotePost(@PathVariable Long postId, @PathVariable String username){
+        Long userId = userService.findByUsername(username).getId();
+        return service.downvotePost(postId, userId);
     }
 
     //createComment
@@ -65,6 +67,7 @@ public class PostController {
         CommentModel comment = new CommentModel();
         comment.setUser(userService.findByUsername(dto.username()));
         comment.setText(dto.text());
+        comment.setScore(0);
         service.createComment(id, comment);
         return ResponseEntity.ok().build();
     }

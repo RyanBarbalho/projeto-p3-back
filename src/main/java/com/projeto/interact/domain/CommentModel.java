@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -27,6 +28,9 @@ public class CommentModel {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<CommentVoteModel> votes;
 
     @ManyToOne
     @JsonIgnore

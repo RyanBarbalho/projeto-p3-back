@@ -33,11 +33,13 @@ public class PostModel {
     @Column(name = "date")
     private Date date;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostVoteModel> votes;
+
     //um usuario pode fazer mtos posts
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private UserModel user;
-
 
     @OneToMany(mappedBy = "post")
     private List<CommentModel> comments;

@@ -11,9 +11,10 @@ public interface CommentService {
 
     void deleteComment(long id);
 
-    CommentModel upvoteComment(long id);
+    CommentModel upvoteComment(Long commentId, Long userId);
 
-    CommentModel downvoteComment(long id);
+    CommentModel downvoteComment(Long commentId, Long userId);
 
     List<CommentModel> getAllByPostId(long id);
+    boolean checkIfUserHasVoted(CommentModel comment, Long userId);
 }
