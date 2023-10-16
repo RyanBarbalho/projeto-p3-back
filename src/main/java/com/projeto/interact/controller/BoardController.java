@@ -65,4 +65,10 @@ public class BoardController {
         boardService.createPost(dto.boardId(), post);
         return ResponseEntity.ok().build();
     }
+
+    //posts sao
+    @GetMapping("/{id}/posts")
+    public List<PostModel> getAllPosts(@PathVariable Long id) {
+        return boardService.getAllPosts(id);
+    }
 }
