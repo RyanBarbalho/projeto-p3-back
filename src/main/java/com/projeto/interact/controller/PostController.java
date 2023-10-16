@@ -48,7 +48,7 @@ public class PostController {
     }
 
     //upvotePOST
-    @PutMapping("/upvote/{postId}/{username}")
+    @PostMapping("/upvote/{postId}/{username}")
     public PostModel upvotePost(@PathVariable Long postId, @PathVariable String username){
         Long userId = userService.findByUsername(username).getId();
         return service.upvotePost(postId, userId);

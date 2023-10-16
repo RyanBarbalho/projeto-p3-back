@@ -34,6 +34,7 @@ public class PostModel {
     private Date date;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<PostVoteModel> votes;
 
     //um usuario pode fazer mtos posts

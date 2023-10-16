@@ -30,6 +30,7 @@ public class CommentModel {
     private Date date;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<CommentVoteModel> votes;
 
     @ManyToOne
