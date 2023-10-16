@@ -1,8 +1,8 @@
 package com.projeto.interact.controller.authentication;
 
-import com.projeto.interact.domain.DTO.AuthenticationDTO;
-import com.projeto.interact.domain.DTO.LoginResponseDTO;
-import com.projeto.interact.domain.DTO.RegisterDTO;
+import com.projeto.interact.domain.DTO.security.AuthenticationDTO;
+import com.projeto.interact.domain.DTO.security.LoginResponseDTO;
+import com.projeto.interact.domain.DTO.security.RegisterDTO;
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.infra.security.TokenService;
 import com.projeto.interact.respository.UserRepository;
