@@ -9,4 +9,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<PostModel, Long> {
 
     List<PostModel> findByBoardId (long boardId);
+
+    List<PostModel> findAllByBoardIdOrderByScoreDesc(Long boardId);
 }

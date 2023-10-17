@@ -1,4 +1,4 @@
-package com.projeto.interact.domain.DTO;
+package com.projeto.interact.domain.DTO.security;
 
 import com.projeto.interact.domain.UserRole;
 

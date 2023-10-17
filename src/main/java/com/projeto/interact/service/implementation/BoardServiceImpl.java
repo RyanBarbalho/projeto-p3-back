@@ -54,4 +54,9 @@ public class BoardServiceImpl implements BoardService {
         postRepository.save(post);
     }
 
+    @Override
+    public List<PostModel> getAllPosts(long id) {
+        return postRepository.findAllByBoardIdOrderByScoreDesc(id);
+    }
+
 }
