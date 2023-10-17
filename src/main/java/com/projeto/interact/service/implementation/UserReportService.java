@@ -1,6 +1,7 @@
 package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.ReportModel;
+import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.respository.ReportRepository;
 import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.utils.FindEntityUtil;
@@ -17,21 +18,21 @@ public class UserReportService {
         this.reportRepository = reportRepository;
     }
 
-    public ReportModel reportPost(Long userId, Long postId, String reason) {
+    public ReportModel reportPost(UserModel user, Long postId, String reason) {
         ReportModel report = new ReportModel();
         report.setDescription(reason);
         report.setIdPost(postId);
-        report.setUser(FindEntityUtil.findEntityById(userRepository, userId, "user"));
+        report.setUser(user);
 
         return reportRepository.save(report);
     }
 
     //report comment
-    public ReportModel reportComment(Long userId, Long commentId, String reason) {
+    public ReportModel reportComment(UserModel user, Long commentId, String reason) {
         ReportModel report = new ReportModel();
         report.setDescription(reason);
         report.setIdComment(commentId);
-        report.setUser(FindEntityUtil.findEntityById(userRepository, userId, "user"));
+        report.setUser(user);
 
         return reportRepository.save(report);
     }

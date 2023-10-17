@@ -12,6 +12,8 @@ public class FindEntityUtil {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND," "+ entityName + " not found" + " with ID: " + id));
 
     }
+
+
     /*funcao para encontrar qualquer entidade e enviar mensagem de erro em caso de exception ƪ(˘⌣˘)ʃ
     * parametro: repository, id, nome da entidade
     * */

@@ -3,6 +3,7 @@ package com.projeto.interact.controller;
 import com.projeto.interact.DTO.ReportCommentDTO;
 import com.projeto.interact.DTO.ReportPostDTO;
 import com.projeto.interact.domain.ReportModel;
+import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.ReportServiceImpl;
 import com.projeto.interact.service.implementation.UserReportService;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,12 @@ public class ReportController {
     ReportServiceImpl reportService;
     UserReportService userReportService;
 
-    public ReportController(ReportServiceImpl reportService, UserReportService userReportService) {
+    UserService userService;
+
+    public ReportController(ReportServiceImpl reportService, UserReportService userReportService, UserService userService) {
         this.reportService = reportService;
         this.userReportService = userReportService;
+        this.userService = userService;
     }
 
     @PostMapping
@@ -47,13 +51,14 @@ public class ReportController {
     //userReportService.
     @PutMapping("/{id}/reportPost")
     public ReportModel reportPost(@RequestBody ReportPostDTO dto, @PathVariable Long id){
-        return userReportService.reportPost(dto.userId(), id, dto.reason());
+
+        return userReportService.reportPost(userService.findByUsername(dto.username()), id, dto.reason());
     }
 
 
     @PutMapping("/{id}/reportComment")
     public ReportModel reportComment(@RequestBody ReportCommentDTO dto, @PathVariable Long id){
-        return userReportService.reportComment(dto.userId(), id, dto.reason());
+        return userReportService.reportComment(userService.findByUsername(dto.username()), id, dto.reason());
     }
 
 
