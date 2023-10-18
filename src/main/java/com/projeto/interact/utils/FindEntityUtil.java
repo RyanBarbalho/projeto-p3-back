@@ -7,7 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class FindEntityUtil {
 
 
-    public static <T> T findEntityById(JpaRepository<T, Long> repository, long id, String entityName) {
+    public static <T> T findEntityById(JpaRepository<T, Long> repository, long id, String entityName) throws ResponseStatusException{
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND," "+ entityName + " not found" + " with ID: " + id));
 

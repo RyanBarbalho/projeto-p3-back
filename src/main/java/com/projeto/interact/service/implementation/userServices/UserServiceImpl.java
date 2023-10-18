@@ -1,4 +1,4 @@
-package com.projeto.interact.service.implementation;
+package com.projeto.interact.service.implementation.userServices;
 
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.respository.UserRepository;

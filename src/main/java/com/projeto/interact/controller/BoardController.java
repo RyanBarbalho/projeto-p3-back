@@ -6,7 +6,6 @@ import com.projeto.interact.domain.PostModel;
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.service.BoardService;
 import com.projeto.interact.service.UserService;
-import com.projeto.interact.service.implementation.UserBoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
