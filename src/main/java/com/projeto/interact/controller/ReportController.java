@@ -54,13 +54,13 @@ public class ReportController {
     @PutMapping("/{id}/reportPost")
     public ReportModel reportPost(@RequestBody ReportPostDTO dto, @PathVariable Long id){
 
-        return userReportService.reportPost(userService.findByUsername(dto.username()), id, dto.reason());
+        return userReportService.reportPost(userService.findByUsername(dto.username()).getId(), id, dto.reason());
     }
 
 
     @PutMapping("/{id}/reportComment")
     public ReportModel reportComment(@RequestBody ReportCommentDTO dto, @PathVariable Long id){
-        return userReportService.reportComment(userService.findByUsername(dto.username()), id, dto.reason());
+        return userReportService.reportComment(userService.findByUsername(dto.username()).getId(), id, dto.reason());
     }
 
     //block user
