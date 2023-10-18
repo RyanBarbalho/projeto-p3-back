@@ -18,4 +18,6 @@ public interface BoardService {
 
     //create post on board
     void createPost(long id, PostModel post);
+
+    List<PostModel> getAllPosts(long id);
 }

@@ -2,7 +2,7 @@ package com.projeto.interact.controller;
 
 import com.projeto.interact.domain.DTO.AddBoardsDTO;
 import com.projeto.interact.domain.UserModel;
-import com.projeto.interact.service.implementation.UserBoardService;
+import com.projeto.interact.service.implementation.userServices.UserBoardService;
 import com.projeto.interact.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,9 +54,6 @@ public class UserController {
 
     @PostMapping("/addboards")
     public ResponseEntity<?> addBoards(@RequestBody AddBoardsDTO userBoards) {
-        System.out.println("teste");
-        System.out.println(userBoards.username());
-        System.out.println(userBoards.boardIds());
         userBoardService.addBoardsToUser(userBoards.username(), userBoards.boardIds());
         return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(userBoards.username()));
     }
@@ -65,6 +62,4 @@ public class UserController {
     public ResponseEntity<?> getUserBoardsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(username));
     }
-
-
 }

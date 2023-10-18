@@ -8,9 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,14 +17,13 @@ import java.util.List;
 public class ReportModel {
     //usuario podera denunciar um comentario ou postagem
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "report_id")
     private Long id;
 
     @Column(nullable = false)
-    private String description;
+    private String reason;
 
     @Column(name = "id_post")
     private Long idPost;
@@ -35,8 +31,14 @@ public class ReportModel {
     @Column(name = "id_comment")
     private Long idComment;
 
+    @Column()
+    private boolean answered;
+
+    @Column()
+    private Long timeout;
+
     //report so possui um user
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
 

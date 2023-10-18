@@ -1,4 +1,4 @@
-package com.projeto.interact.DTO;
+package com.projeto.interact.domain.DTO;
 
 import com.projeto.interact.domain.UserRole;
 

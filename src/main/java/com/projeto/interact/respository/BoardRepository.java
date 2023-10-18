@@ -11,4 +11,5 @@ public interface BoardRepository extends JpaRepository<BoardModel,Long> {
     BoardModel findBoardModelByName(String name);
 
     List<BoardModel> findAllByName(String name);
+
 }

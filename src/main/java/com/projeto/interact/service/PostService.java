@@ -17,9 +17,11 @@ public interface PostService {
     List<PostModel> findAll();
 
     //upvoteService
-    PostModel upvotePost(long id);
+    PostModel upvotePost(Long postId, Long userId);
 
-    PostModel downvotePost(long id);
+    PostModel downvotePost(Long postId, Long userId);
+
+    boolean checkIfUserHasVoted(PostModel post, Long userId);
 
     PostModel createComment(long id, CommentModel comment);
 

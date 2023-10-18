@@ -1,8 +1,8 @@
 package com.projeto.interact.controller.authentication;
 
-import com.projeto.interact.domain.DTO.AuthenticationDTO;
-import com.projeto.interact.domain.DTO.LoginResponseDTO;
-import com.projeto.interact.domain.DTO.RegisterDTO;
+import com.projeto.interact.domain.DTO.security.AuthenticationDTO;
+import com.projeto.interact.domain.DTO.security.LoginResponseDTO;
+import com.projeto.interact.domain.DTO.security.RegisterDTO;
 import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.infra.security.TokenService;
 import com.projeto.interact.respository.UserRepository;
@@ -31,16 +31,27 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
-    //login
+    /**
+     * Realiza a autenticação de um usuário e gera um token JWT se as credenciais forem válidas.
+     * <p>
+     * Este endpoint permite que um usuário faça login no sistema. Ele recebe um objeto DTO de autenticação
+     * contendo as credenciais do usuário (login e senha). As etapas incluem criptografia da senha,
+     * verificação das credenciais no banco de dados e geração de um token JWT se as credenciais forem válidas.
+     *
+     * @param dto O objeto AuthenticationDTO contendo as credenciais do usuário.
+     * @return Um ResponseEntity com um objeto LoginResponseDTO contendo o token JWT e o nome de usuário
+     *         se a autenticação for bem-sucedida. Se as credenciais forem inválidas, uma resposta 401 (Não Autorizado)
+     *         será enviada.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO dto){
         //criptografar a senha, salvar no bd, comparar com a q tem no bd
         //se for igual, retorna o token
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
-        //bcrypt vai criptografar e comparar com a senha ja criptografada no bd
+
+
+        // Autentica as credenciais e gera um token JWT se forem válidas
         var authentication = this.authenticationManager.authenticate(usernamePassword);
-
-
         var token = tokenService.generateToken((UserModel)authentication.getPrincipal());
 
         UserDetails user = userRepository.findByLogin(dto.login());

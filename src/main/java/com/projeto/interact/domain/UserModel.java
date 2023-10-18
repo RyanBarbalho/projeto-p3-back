@@ -23,6 +23,7 @@ public class UserModel implements UserDetails{
     @Column(name="user_id",unique = true)
     private Long id;
 
+    @Getter
     @Column(nullable = false, length = 25)
     private String username;
 
@@ -38,12 +39,16 @@ public class UserModel implements UserDetails{
     @Column(name="role")
     private UserRole role;
 
+    @Column(name="is_enabled")
+    private boolean blocked;
+
     public UserModel(String login, String username, String password, UserRole role) {
         this.login = login;
         this.username = username;
         this.password = password;
         this.pontuacao = 0;
         this.role = role;
+        this.blocked = false;
     }
 
     @ManyToMany

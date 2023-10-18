@@ -19,9 +19,23 @@ public class TokenService {
     @Value("${api.security.token.secret}")//caminho que vamos definir no application.properties e vamos consultar as variaveis de ambiente
     private String secret;
 
+    /*
+     * Gera um token JWT (JSON Web Token) para um usuário específico.
+     *
+     * Este método cria um token JWT com base nas informações do usuário e uma chave
+     * secreta (chamada 'secret') fornecida. O token inclui o emissor, o assunto e a
+     * data de expiração.
+     *
+     * @param userModel O objeto UserModel do usuário para o qual o token será gerado.
+     * @return Uma representação do token JWT gerado.
+     * @throws RuntimeException Se ocorrer um erro durante a criação do token,
+     *                        uma exceção será lançada com uma mensagem de erro.
+     */
     public String generateToken(UserModel userModel) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);//secret -> faz os hashs serem unicos(chave privada)
+            // Cria um algoritmo de assinatura com a chave secreta
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+
             String token = JWT.create()
                     .withIssuer("Interact")//quem ta gerando o token
                     .withSubject(userModel.getLogin())//quem é o usuario
@@ -33,6 +47,17 @@ public class TokenService {
         }
     }
 
+    /*
+     * Valida um token JWT (JSON Web Token) e recupera o assunto (subject) do token.
+     *
+     * Este método verifica a validade de um token JWT com base em uma chave secreta
+     * (chamada 'secret') fornecida e recupera o assunto (subject) do token, que é
+     * normalmente o login do usuário.
+     *
+     * @param token O token JWT a ser validado.
+     * @return O assunto (subject) do token se o token for válido. Se o token for inválido
+     *         ou expirado, retorna uma string vazia.
+     */
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
