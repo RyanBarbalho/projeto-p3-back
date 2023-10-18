@@ -1,4 +1,4 @@
 package com.projeto.interact.domain.DTO;
 
-public record ReportCommentDTO(Long userId, String reason) {
+public record ReportCommentDTO(String username, String reason) {
 }

@@ -3,6 +3,7 @@ package com.projeto.interact.service.implementation.userServices;
 import com.projeto.interact.domain.PostModel;
 import com.projeto.interact.domain.ReportModel;
 import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.respository.ReportRepository;
 import com.projeto.interact.respository.UserRepository;
@@ -15,10 +16,14 @@ public class UserReportService {
     UserRepository userRepository;
     ReportRepository reportRepository;
     PostRepository postRepository;
+    CommentRepository commentRepository;
 
-    public UserReportService(UserRepository userRepository, ReportRepository reportRepository) {
+    public UserReportService(UserRepository userRepository, ReportRepository reportRepository, CommentRepository commentRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.reportRepository = reportRepository;
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+
     }
 
     public ReportModel reportPost(Long userId, Long postId, String reason) {
@@ -56,19 +61,26 @@ public class UserReportService {
     public ReportModel blockUser(Long reportId, Long timeout, String reason) {
         try{
             ReportModel report = FindEntityUtil.findEntityById(reportRepository, reportId, "report");
-            PostModel reportedPost = FindEntityUtil.findEntityById(postRepository, report.getIdPost(), "post");
-            UserModel blockedUser = FindEntityUtil.findEntityById(userRepository, reportedPost.getUser().getId(), "user");
 
-            blockedUser.setBlocked(true);
+            //verifica se é post ou comentario
+            //bloqueia o usuario e deleta post ou comentario.
+            if(report.getIdPost() != null){
+                PostModel post = FindEntityUtil.findEntityById(postRepository, report.getIdPost(), "post");
+                UserModel user = FindEntityUtil.findEntityById(userRepository, post.getUser().getId(), "user");
+                user.setBlocked(true);
+                userRepository.save(user);
+                postRepository.deleteById(report.getIdPost());
+            }
+            else{
+                UserModel user = FindEntityUtil.findEntityById(userRepository, report.getUser().getId(), "user");
+                user.setBlocked(true);
+                userRepository.save(user);
+                commentRepository.deleteById(report.getIdComment());
+            }
 
             report.setReason(reason);
             report.setTimeout(timeout);
             report.setAnswered(true);
-
-            //apaga todos os outros reports
-            reportRepository.deleteAllByIdPost(report.getIdPost());
-            //apaga o post tambem
-            postRepository.deleteById(report.getIdPost());
 
             //salva o report com o timeout e motivo para o usuario ter sido bloqueado
             return reportRepository.save(report);

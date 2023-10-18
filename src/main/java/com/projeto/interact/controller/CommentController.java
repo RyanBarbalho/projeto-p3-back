@@ -1,11 +1,13 @@
 package com.projeto.interact.controller;
 
+import com.projeto.interact.DTO.CommentResponseDTO;
 import com.projeto.interact.domain.CommentModel;
 import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.CommentServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/comments")
@@ -43,7 +45,18 @@ public class CommentController {
     }
 
     @GetMapping("/posts/{id}")
-    public List<CommentModel> getAllCommentsByPostId(@PathVariable Long id) { return service.getAllByPostId(id); }
+    public List<CommentResponseDTO> getAllCommentsByPostId(@PathVariable Long id) {
+        List<CommentModel> commentModels = service.getAllByPostId(id);
+
+        return commentModels.stream()
+                .map(commentModel -> new CommentResponseDTO(
+                        commentModel.getId(),
+                        commentModel.getText(),
+                        commentModel.getUser().getUsername(),
+                        commentModel.getDate()
+                ))
+                .collect(Collectors.toList());
+    }
 
 
 }
