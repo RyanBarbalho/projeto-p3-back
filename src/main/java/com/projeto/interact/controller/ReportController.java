@@ -3,6 +3,7 @@ package com.projeto.interact.controller;
 import com.projeto.interact.DTO.ReportCommentDTO;
 import com.projeto.interact.DTO.ReportPostDTO;
 import com.projeto.interact.domain.ReportModel;
+import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.ReportServiceImpl;
 import com.projeto.interact.service.implementation.UserReportService;
@@ -61,5 +62,10 @@ public class ReportController {
         return userReportService.reportComment(userService.findByUsername(dto.username()), id, dto.reason());
     }
 
-
+    @PutMapping("/{id}/block")
+    public ResponseEntity<?> blockUser (@PathVariable Long id) {
+        ReportModel report = reportService.getReport(id);
+        UserModel user = report.getUser();
+        return ResponseEntity.ok().build();
+    }
 }
