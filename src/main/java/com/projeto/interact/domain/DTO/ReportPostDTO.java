@@ -1,5 +1,5 @@
 package com.projeto.interact.domain.DTO;
 
 
-public record ReportPostDTO(Long userId, String reason) {
+public record ReportPostDTO(String username, String reason) {
 }

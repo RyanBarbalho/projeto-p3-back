@@ -1,5 +1,7 @@
 package com.projeto.interact.controller;
 
+import com.projeto.interact.DTO.CommentResponseDTO;
+import com.projeto.interact.DTO.PostResponseDTO;
 import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.CommentModel;
 import com.projeto.interact.domain.DTO.CreateCommentDTO;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/posts")
@@ -37,8 +40,9 @@ public class PostController {
 
     //getPOST
     @GetMapping("/{id}")
-    public PostModel getPost(@PathVariable Long id){
-        return service.getPost(id);
+    public PostResponseDTO getPost(@PathVariable Long id){
+        PostModel post = service.getPost(id);
+        return new PostResponseDTO(id, post.getTitle(), post.getText(), post.getUser().getUsername(), post.getDate());
     }
 
     //deletePOST
@@ -55,7 +59,7 @@ public class PostController {
     }
 
     //downvotePOST
-    @PutMapping("/downvote/{postId}/{username}")
+    @PostMapping("/downvote/{postId}/{username}")
     public PostModel downvotePost(@PathVariable Long postId, @PathVariable String username){
         Long userId = userService.findByUsername(username).getId();
         return service.downvotePost(postId, userId);
@@ -64,11 +68,13 @@ public class PostController {
     //createComment
     @PostMapping("/{id}/comments")
     public ResponseEntity createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
+        System.out.print("Teste");
         CommentModel comment = new CommentModel();
         comment.setUser(userService.findByUsername(dto.username()));
         comment.setText(dto.text());
         comment.setScore(0);
         service.createComment(id, comment);
+        System.out.print(comment);
         return ResponseEntity.ok().build();
     }
 
@@ -79,7 +85,16 @@ public class PostController {
     }
 
     @GetMapping("/board/{id}")
-    public List<PostModel> getAllById(@PathVariable Long id) {
-        return service.findByBoardId(id);
+    public List<PostResponseDTO> getAllById(@PathVariable Long id) {
+        List<PostModel> postModels = service.findByBoardId(id);
+        return postModels.stream()
+                .map(postModel -> new PostResponseDTO(
+                        postModel.getId(),
+                        postModel.getTitle(),
+                        postModel.getText(),
+                        postModel.getUser().getUsername(),
+                        postModel.getDate()
+                ))
+                .collect(Collectors.toList());
     }
 }

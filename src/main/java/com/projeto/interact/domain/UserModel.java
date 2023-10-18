@@ -23,6 +23,7 @@ public class UserModel implements UserDetails{
     @Column(name="user_id",unique = true)
     private Long id;
 
+    @Getter
     @Column(nullable = false, length = 25)
     private String username;
 
