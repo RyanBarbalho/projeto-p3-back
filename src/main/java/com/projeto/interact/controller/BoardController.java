@@ -53,7 +53,7 @@ public class BoardController {
 
     @PostMapping("/create-post")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createPost(@RequestBody CreatePostDTO dto) {
+    public ResponseEntity<?> createPost(@RequestBody CreatePostDTO dto) {
         UserModel user = userService.findByUsername(dto.username());
         BoardModel boardModel = boardService.getBoard(dto.boardId());
         PostModel post = new PostModel();
