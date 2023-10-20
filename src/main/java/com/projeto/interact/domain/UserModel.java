@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,6 +43,8 @@ public class UserModel implements UserDetails{
     @Column(name="is_enabled")
     private boolean blocked;
 
+    @Column(name="blocked_until")
+    private LocalDateTime blockedUntil;
     public UserModel(String login, String username, String password, UserRole role) {
         this.login = login;
         this.username = username;
@@ -49,6 +52,7 @@ public class UserModel implements UserDetails{
         this.pontuacao = 0;
         this.role = role;
         this.blocked = false;
+        this.blockedUntil = null;
     }
 
     @ManyToMany

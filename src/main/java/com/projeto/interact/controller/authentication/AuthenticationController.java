@@ -8,6 +8,7 @@ import com.projeto.interact.infra.security.TokenService;
 import com.projeto.interact.respository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -53,11 +56,23 @@ public class AuthenticationController {
         // Autentica as credenciais e gera um token JWT se forem válidas
         var authentication = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel)authentication.getPrincipal());
+        System.out.println(dto.login());
 
-        UserDetails user = userRepository.findByLogin(dto.login());
+        UserModel user = userRepository.findByLogin(dto.login());
+
+        if (user.isBlocked()) {
+            if (user.getBlockedUntil().isBefore(LocalDateTime.now())) {
+                return ResponseEntity
+                        .status(HttpStatus.FORBIDDEN)
+                        .body("Esta conta foi bloqueada!");
+            }
+            user.setBlocked(false);
+            user.setBlockedUntil(null);
+            userRepository.save(user);
+
+        }
 
         return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername()));//quando logar vai receber o token
-
     }
 
     @PostMapping("/register")

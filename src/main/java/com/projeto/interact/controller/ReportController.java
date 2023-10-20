@@ -50,13 +50,11 @@ public class ReportController {
         return ResponseEntity.ok(reports);
     }
 
-    //userReportService.
     @PutMapping("/{id}/reportPost")
     public ReportModel reportPost(@RequestBody ReportPostDTO dto, @PathVariable Long id){
 
         return userReportService.reportPost(userService.findByUsername(dto.username()).getId(), id, dto.reason());
     }
-
 
     @PutMapping("/{id}/reportComment")
     public ReportModel reportComment(@RequestBody ReportCommentDTO dto, @PathVariable Long id){
@@ -70,3 +68,6 @@ public class ReportController {
     }
 
 }
+
+
+

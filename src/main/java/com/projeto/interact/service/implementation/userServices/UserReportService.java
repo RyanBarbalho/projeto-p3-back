@@ -11,6 +11,9 @@ import com.projeto.interact.utils.FindEntityUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 @Service
 public class UserReportService {
     UserRepository userRepository;
@@ -68,6 +71,7 @@ public class UserReportService {
                 PostModel post = FindEntityUtil.findEntityById(postRepository, report.getIdPost(), "post");
                 UserModel user = FindEntityUtil.findEntityById(userRepository, post.getUser().getId(), "user");
                 user.setBlocked(true);
+                user.setBlockedUntil(LocalDateTime.now().plus(Duration.ofDays(timeout)));
                 userRepository.save(user);
                 postRepository.deleteById(report.getIdPost());
             }
