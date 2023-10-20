@@ -1,6 +1,9 @@
-package com.projeto.interact.domain;
+package com.projeto.interact.domain.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.user.UserModel;
+import com.projeto.interact.domain.comment.CommentModel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Setter;

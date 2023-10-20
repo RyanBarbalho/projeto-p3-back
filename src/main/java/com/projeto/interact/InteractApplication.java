@@ -1,7 +1,7 @@
 package com.projeto.interact;
 
-import com.projeto.interact.domain.UserModel;
-import com.projeto.interact.domain.UserRole;
+import com.projeto.interact.domain.user.UserModel;
+import com.projeto.interact.domain.user.UserRole;
 import com.projeto.interact.respository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

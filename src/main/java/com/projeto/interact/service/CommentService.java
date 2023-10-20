@@ -1,6 +1,6 @@
 package com.projeto.interact.service;
 
-import com.projeto.interact.domain.CommentModel;
+import com.projeto.interact.domain.comment.CommentModel;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.projeto.interact.controller;
 
 import com.projeto.interact.domain.BoardModel;
-import com.projeto.interact.domain.DTO.CreatePostDTO;
-import com.projeto.interact.domain.PostModel;
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.DTO.post.CreatePostDTO;
+import com.projeto.interact.domain.post.PostModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.service.BoardService;
 import com.projeto.interact.service.UserService;
 import org.springframework.http.HttpStatus;

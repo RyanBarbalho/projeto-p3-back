@@ -1,19 +1,13 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.DTO.CommentResponseDTO;
-import com.projeto.interact.DTO.PostResponseDTO;
-import com.projeto.interact.domain.BoardModel;
-import com.projeto.interact.domain.CommentModel;
-import com.projeto.interact.domain.DTO.CreateCommentDTO;
-import com.projeto.interact.domain.DTO.CreatePostDTO;
-import com.projeto.interact.domain.PostModel;
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.DTO.post.PostResponseDTO;
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.DTO.comment.CreateCommentDTO;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.service.BoardService;
 import com.projeto.interact.service.CommentService;
 import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.PostServiceImpl;
-import com.projeto.interact.utils.FindEntityUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,14 +61,12 @@ public class PostController {
 
     //createComment
     @PostMapping("/{id}/comments")
-    public ResponseEntity createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
-        System.out.print("Teste");
+    public ResponseEntity<?> createComment(@PathVariable Long id, @RequestBody CreateCommentDTO dto){
         CommentModel comment = new CommentModel();
         comment.setUser(userService.findByUsername(dto.username()));
         comment.setText(dto.text());
         comment.setScore(0);
         service.createComment(id, comment);
-        System.out.print(comment);
         return ResponseEntity.ok().build();
     }
 

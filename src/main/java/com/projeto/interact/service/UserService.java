@@ -1,6 +1,6 @@
 package com.projeto.interact.service;
 
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.user.UserModel;
 
 import java.util.List;
 

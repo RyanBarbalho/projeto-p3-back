@@ -1,6 +1,8 @@
 package com.projeto.interact.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projeto.interact.domain.post.PostModel;
+import com.projeto.interact.domain.user.UserModel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
