@@ -1,9 +1,8 @@
 package com.projeto.interact.service.implementation;
 
-import com.projeto.interact.domain.CommentModel;
-import com.projeto.interact.domain.CommentVoteModel;
-import com.projeto.interact.domain.PostModel;
-import com.projeto.interact.domain.PostVoteModel;
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.post.PostModel;
+import com.projeto.interact.domain.post.PostVoteModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.respository.PostVoteRepository;

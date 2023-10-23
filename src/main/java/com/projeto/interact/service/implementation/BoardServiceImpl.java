@@ -1,7 +1,7 @@
 package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.BoardModel;
-import com.projeto.interact.domain.PostModel;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.service.BoardService;

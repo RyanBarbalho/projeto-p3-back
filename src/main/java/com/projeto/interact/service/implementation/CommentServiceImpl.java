@@ -1,13 +1,12 @@
 package com.projeto.interact.service.implementation;
 
-import com.projeto.interact.domain.CommentModel;
-import com.projeto.interact.domain.CommentVoteModel;
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.comment.CommentVoteModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.CommentVoteRepository;
 import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.CommentService;
 import com.projeto.interact.utils.FindEntityUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

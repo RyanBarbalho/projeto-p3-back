@@ -1,11 +1,12 @@
-package com.projeto.interact.domain;
+package com.projeto.interact.domain.user;
 
 import lombok.Getter;
 
 @Getter
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    USER("user"),
+    MONITOR("monitor");
 
     private final String role;
 

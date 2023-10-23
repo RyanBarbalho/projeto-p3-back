@@ -1,10 +1,9 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.domain.DTO.ReportAnswerDTO;
-import com.projeto.interact.domain.DTO.ReportCommentDTO;
-import com.projeto.interact.domain.DTO.ReportPostDTO;
+import com.projeto.interact.domain.DTO.reports.ReportAnswerDTO;
+import com.projeto.interact.domain.DTO.reports.ReportCommentDTO;
+import com.projeto.interact.domain.DTO.reports.ReportPostDTO;
 import com.projeto.interact.domain.ReportModel;
-import com.projeto.interact.domain.UserModel;
 import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.ReportServiceImpl;
 import com.projeto.interact.service.implementation.userServices.UserReportService;

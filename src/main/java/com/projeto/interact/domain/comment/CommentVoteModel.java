@@ -1,5 +1,6 @@
-package com.projeto.interact.domain;
+package com.projeto.interact.domain.comment;
 
+import com.projeto.interact.domain.user.UserModel;
 import jakarta.persistence.*;
 import lombok.Data;
 

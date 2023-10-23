@@ -2,6 +2,7 @@ package com.projeto.interact.domain;
 
 //denuncias por usuario
 
+import com.projeto.interact.domain.user.UserModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

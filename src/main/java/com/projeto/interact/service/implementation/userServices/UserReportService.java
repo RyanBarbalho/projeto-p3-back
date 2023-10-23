@@ -1,8 +1,8 @@
 package com.projeto.interact.service.implementation.userServices;
 
-import com.projeto.interact.domain.PostModel;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.ReportModel;
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.respository.ReportRepository;

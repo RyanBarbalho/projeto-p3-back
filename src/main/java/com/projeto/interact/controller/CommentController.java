@@ -1,7 +1,7 @@
 package com.projeto.interact.controller;
 
-import com.projeto.interact.DTO.CommentResponseDTO;
-import com.projeto.interact.domain.CommentModel;
+import com.projeto.interact.domain.DTO.comment.CommentResponseDTO;
+import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.service.UserService;
 import com.projeto.interact.service.implementation.CommentServiceImpl;
 import org.springframework.web.bind.annotation.*;

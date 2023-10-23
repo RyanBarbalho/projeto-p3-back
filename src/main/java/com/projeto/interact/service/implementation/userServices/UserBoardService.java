@@ -1,12 +1,10 @@
 package com.projeto.interact.service.implementation.userServices;
 
 import com.projeto.interact.domain.BoardModel;
-import com.projeto.interact.domain.DTO.CreatePostDTO;
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

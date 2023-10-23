@@ -1,5 +1,8 @@
-package com.projeto.interact.domain;
+package com.projeto.interact.domain.user;
 
+import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.post.PostModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +43,7 @@ public class UserModel implements UserDetails{
     @Column(name="role")
     private UserRole role;
 
-    @Column(name="is_enabled")
+    @Column(name="is_blocked", columnDefinition = "boolean default false", nullable = false)
     private boolean blocked;
 
     @Column(name="blocked_until")

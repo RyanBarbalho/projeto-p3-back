@@ -1,12 +1,9 @@
 package com.projeto.interact.service.implementation.userServices;
 
-import com.projeto.interact.domain.UserModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.UserService;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
