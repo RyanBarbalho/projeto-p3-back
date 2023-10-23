@@ -55,7 +55,6 @@ public class AuthenticationController {
         // Autentica as credenciais e gera um token JWT se forem válidas
         var authentication = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel)authentication.getPrincipal());
-        System.out.println(dto.login());
 
         UserModel user = userRepository.findByLogin(dto.login());
 

@@ -45,22 +45,22 @@ public class RequestController {
      * @see RequestModel
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createRequest(@RequestParam("image")MultipartFile image, CreateRequestDTO dto){
+    public ResponseEntity<?> createRequest(@RequestParam("pdfFile") MultipartFile pdfFile,@RequestParam("username") String username, @RequestParam("boardId") Long boardId){
         try {
             // Valida dados
-            if (image.isEmpty() || dto == null || dto.userId() == null || dto.boardId() == null) {
+            if (pdfFile.isEmpty()  || username == null || boardId == null) {
                 return ResponseEntity.badRequest().body("Invalid request data.");
             }
             //cria e popula request
             RequestModel request = new RequestModel();
-            request.setUser(userService.getUser(dto.userId()));
-            request.setBoard(boardService.getBoard(dto.boardId()));
-            request.setCertificate(image.getBytes());
+            request.setUser(userService.findByUsername(username));
+            request.setBoard(boardService.getBoard(boardId));
+            request.setCertificate(pdfFile.getBytes());
             requestService.createRequest(request);
-
+            System.out.println("Teste");
             return ResponseEntity.ok().build();
-        }catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a imagem.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the PDF file.");
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");

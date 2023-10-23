@@ -1,5 +1,6 @@
 package com.projeto.interact.service.implementation.userServices;
 
+import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.ReportModel;
 import com.projeto.interact.domain.user.UserModel;
@@ -73,13 +74,17 @@ public class UserReportService {
                 user.setBlocked(true);
                 user.setBlockedUntil(LocalDateTime.now().plus(Duration.ofDays(timeout)));
                 userRepository.save(user);
-                postRepository.deleteById(report.getIdPost());
+                post.setTitle("Essa questão foi removida!");
+                post.setText("Essa questão foi removida!");
+                postRepository.save(post);
             }
             else{
+                CommentModel comment = FindEntityUtil.findEntityById(commentRepository, report.getIdComment(), "comment");
                 UserModel user = FindEntityUtil.findEntityById(userRepository, report.getUser().getId(), "user");
                 user.setBlocked(true);
                 userRepository.save(user);
-                commentRepository.deleteById(report.getIdComment());
+                comment.setText("Esta resposta foi removida!");
+                commentRepository.save(comment);
             }
 
             report.setReason(reason);
