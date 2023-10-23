@@ -1,5 +1,6 @@
 package com.projeto.interact.infra.security;
 
+import com.projeto.interact.domain.user.UserRole;
 import com.projeto.interact.infra.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +44,35 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new AntPathRequestMatcher("/auth/login", "POST")).permitAll() //qualquer um pode fazer login
                         .requestMatchers(new AntPathRequestMatcher("/auth/register", "POST")).permitAll() //por enquanto, para teste, pois tem a parada do role como vai ficar
-                        .anyRequest().permitAll() //permitir acesso a todos por enquanto
+
+                        .requestMatchers(new AntPathRequestMatcher("/request/create", "POST")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "GET")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "DELETE")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/request/accept/{id}", "POST")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("request","GET")).hasRole("admin")
+
+                        .requestMatchers(new AntPathRequestMatcher("/report", "GET")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "GET")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "DELETE")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/{id}/reportPost", "PUT")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/{id}/reportComment", "PUT")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/{id}/blockUser", "POST")).hasAnyRole("admin", "monitor")
+
+                        .requestMatchers(new AntPathRequestMatcher("/boards", "POST")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/boards", "GET")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/boards/{id}", "GET")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/boards/{id}", "DELETE")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/boards/create-post", "POST")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/boards/{id}/posts", "GET")).authenticated()
+
+                        .requestMatchers(new AntPathRequestMatcher("/posts/{id}", "DELETE")).hasAnyRole("admin", "monitor")
+
+                        .requestMatchers(new AntPathRequestMatcher("/comments/{id}", "DELETE")).hasAnyRole("admin", "monitor")
+
+                        .requestMatchers(new AntPathRequestMatcher("/users", "GET")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/users/{id}", "DELETE")).hasRole("admin")
+                        //.requestMatchers(new AntPathRequestMatcher("/addboards", "POST")).hasRole("admin")
+                        .anyRequest().permitAll() //acesso sera authenticated apos mais testes
                 )
                 .csrf(AbstractHttpConfigurer::disable) //desabilitar o csrf -> cross site request forgery bloqueia as requisiÃ§Ãµes de outros sites
                 .cors(withDefaults())

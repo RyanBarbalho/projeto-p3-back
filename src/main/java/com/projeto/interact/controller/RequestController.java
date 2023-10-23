@@ -27,23 +27,7 @@ public class RequestController {
         this.boardService = boardService;
     }
 
-    /**
-     * Cria uma nova solicitação com uma imagem enviada.
-     *
-     * @param image O arquivo de imagem enviado como MultipartFile.
-     * @param dto   O objeto de transferência de dados (DTO) contendo detalhes da solicitação.
-     * @return Um ResponseEntity representando a resposta HTTP para a criação da solicitação.
-     * <p>
-     * Este método lida com a criação de uma nova solicitação, associando-a com uma imagem enviada.
-     * Ele valida os dados de entrada, cria uma instância RequestModel e configura seus atributos.
-     * Se bem-sucedido, retorna um ResponseEntity com um status 200 OK.
-     * Se houver um erro no processamento da imagem, retorna um erro interno do servidor 500.
-     * Para outras exceções, retorna um erro interno do servidor 500 com uma mensagem de erro geral.
-     *
-     * @see MultipartFile
-     * @see CreateRequestDTO
-     * @see RequestModel
-     */
+
     @PostMapping("/create")
     public ResponseEntity<?> createRequest(@RequestParam("pdfFile") MultipartFile pdfFile,@RequestParam("username") String username, @RequestParam("boardId") Long boardId){
         try {
