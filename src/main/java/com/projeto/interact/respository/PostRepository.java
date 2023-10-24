@@ -13,6 +13,10 @@ public interface PostRepository extends JpaRepository<PostModel, Long> {
 
     List<PostModel> findAllByBoardIdOrderByScoreDesc(Long boardId);
 
+    @Query("SELECT p FROM PostModel p WHERE (p.board.id = :boardId) " +
+            "AND (SELECT COUNT(c) FROM CommentModel c WHERE c.post = p) = 0")
+    List<PostModel> findPostsInBoardWithNoComments(@Param("boardId") long boardId);
+
     @Query("SELECT p FROM PostModel p WHERE LOWER(p.title) LIKE %:searchTerm% OR LOWER(p.text) LIKE %:searchTerm%")
     List<PostModel> searchPosts(@Param("searchTerm") String searchTerm);
 }

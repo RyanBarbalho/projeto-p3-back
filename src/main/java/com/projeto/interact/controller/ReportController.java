@@ -52,12 +52,12 @@ public class ReportController {
     @PutMapping("/{id}/reportPost")
     public ReportModel reportPost(@RequestBody ReportPostDTO dto, @PathVariable Long id){
 
-        return userReportService.reportPost(userService.findByUsername(dto.username()).getId(), id, dto.reason());
+        return userReportService.reportPost(userService.findByUsername(dto.username()).getId(), id, dto.reason(), dto.boardId());
     }
 
     @PutMapping("/{id}/reportComment")
     public ReportModel reportComment(@RequestBody ReportCommentDTO dto, @PathVariable Long id){
-        return userReportService.reportComment(userService.findByUsername(dto.username()).getId(), id, dto.reason());
+        return userReportService.reportComment(userService.findByUsername(dto.username()).getId(), id, dto.reason(), dto.boardId());
     }
 
     //block user
@@ -66,6 +66,10 @@ public class ReportController {
         return userReportService.blockUser(id, dto.timeout(), dto.reason());
     }
 
+    @GetMapping("/board/{id}")
+    public List<ReportModel> getAllByBoard (@PathVariable Long id) {
+        return reportService.findAllByBoard(id);
+    }
 }
 
 

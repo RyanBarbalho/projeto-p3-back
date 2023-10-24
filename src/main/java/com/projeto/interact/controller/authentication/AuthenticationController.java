@@ -70,7 +70,7 @@ public class AuthenticationController {
 
         }
 
-        return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername()));//quando logar vai receber o token
+        return ResponseEntity.ok(new LoginResponseDTO(token, user.getUsername(), user.getRole().toString(), user.getBoardId()));//quando logar vai receber o token
     }
 
     @PostMapping("/register")

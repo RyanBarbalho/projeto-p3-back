@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/request/{id}", "GET")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/request/{id}", "DELETE")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/request/accept/{id}", "POST")).hasRole("ADMIN")
-                        .requestMatchers(new AntPathRequestMatcher("request","GET")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/request","GET")).hasRole("ADMIN")
 
                         .requestMatchers(new AntPathRequestMatcher("/report", "GET")).hasAnyRole("ADMIN", "MONITOR")
                         .requestMatchers(new AntPathRequestMatcher("/report/{id}", "GET")).hasAnyRole("ADMIN", "MONITOR")

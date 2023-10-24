@@ -40,4 +40,9 @@ public class ReportServiceImpl implements ReportService {
         return reportRepository.findAll();
     }
 
+    @Override
+    public List<ReportModel> findAllByBoard(Long id) {
+        return reportRepository.findAllByBoardId(id);
+    }
+
 }
