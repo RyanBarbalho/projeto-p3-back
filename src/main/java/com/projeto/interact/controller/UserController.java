@@ -27,15 +27,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers(){
+    public ResponseEntity<?> getAllUsers() {
         List<UserModel> userList = service.findAll();
         return ResponseEntity.ok(userList);
-    }
-
-
-    @GetMapping("/{id}")
-    UserModel getUser(@PathVariable Long id){
-        return service.getUser(id);
     }
 
     @GetMapping ("/{username}")
