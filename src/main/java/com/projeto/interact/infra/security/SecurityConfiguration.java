@@ -45,32 +45,32 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/auth/login", "POST")).permitAll() //qualquer um pode fazer login
                         .requestMatchers(new AntPathRequestMatcher("/auth/register", "POST")).permitAll() //por enquanto, para teste, pois tem a parada do role como vai ficar
 
-                        .requestMatchers(new AntPathRequestMatcher("/request/create", "POST")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "GET")).hasRole("admin")
-                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "DELETE")).hasRole("admin")
-                        .requestMatchers(new AntPathRequestMatcher("/request/accept/{id}", "POST")).hasRole("admin")
-                        .requestMatchers(new AntPathRequestMatcher("request","GET")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/request/create", "POST")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "GET")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/request/{id}", "DELETE")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/request/accept/{id}", "POST")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("request","GET")).hasRole("ADMIN")
 
-                        .requestMatchers(new AntPathRequestMatcher("/report", "GET")).hasAnyRole("admin", "monitor")
-                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "GET")).hasAnyRole("admin", "monitor")
-                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "DELETE")).hasAnyRole("admin", "monitor")
-                        .requestMatchers(new AntPathRequestMatcher("/{id}/reportPost", "PUT")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/{id}/reportComment", "PUT")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/{id}/blockUser", "POST")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/report", "GET")).hasAnyRole("ADMIN", "MONITOR")
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "GET")).hasAnyRole("ADMIN", "MONITOR")
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}", "DELETE")).hasAnyRole("ADMIN", "MONITOR")
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}/reportPost", "PUT")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}/reportComment", "PUT")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/report/{id}/blockUser", "POST")).hasAnyRole("ADMIN", "MONITOR")
 
-                        .requestMatchers(new AntPathRequestMatcher("/boards", "POST")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/boards", "POST")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/boards", "GET")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/boards/{id}", "GET")).authenticated()
-                        .requestMatchers(new AntPathRequestMatcher("/boards/{id}", "DELETE")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/boards/{id}", "DELETE")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/boards/create-post", "POST")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/boards/{id}/posts", "GET")).authenticated()
 
-                        .requestMatchers(new AntPathRequestMatcher("/posts/{id}", "DELETE")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/posts/{id}", "DELETE")).hasAnyRole("ADMIN", "MONITOR")
 
-                        .requestMatchers(new AntPathRequestMatcher("/comments/{id}", "DELETE")).hasAnyRole("admin", "monitor")
+                        .requestMatchers(new AntPathRequestMatcher("/comments/{id}", "DELETE")).hasAnyRole("ADMIN", "MONITOR")
 
-                        .requestMatchers(new AntPathRequestMatcher("/users", "GET")).hasRole("admin")
-                        .requestMatchers(new AntPathRequestMatcher("/users/{id}", "DELETE")).hasRole("admin")
+                        .requestMatchers(new AntPathRequestMatcher("/users", "GET")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/users/{id}", "DELETE")).hasRole("ADMIN")
                         //.requestMatchers(new AntPathRequestMatcher("/addboards", "POST")).hasRole("admin")
                         .anyRequest().permitAll() //acesso sera authenticated apos mais testes
                 )
@@ -86,7 +86,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:8080","http://localhost:5173", "http://127.0.0.1:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

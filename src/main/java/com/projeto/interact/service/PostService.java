@@ -27,4 +27,8 @@ public interface PostService {
 
     //get all comments
     List<CommentModel> getAllComments(long id);
+
+    String getVoteStatus(PostModel post, Long userId);
+
+    List<PostModel> search(String search);
 }

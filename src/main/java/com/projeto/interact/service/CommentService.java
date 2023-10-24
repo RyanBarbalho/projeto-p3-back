@@ -17,4 +17,6 @@ public interface CommentService {
 
     List<CommentModel> getAllByPostId(long id);
     boolean checkIfUserHasVoted(CommentModel comment, Long userId);
+
+    String getVoteStatus(CommentModel comment, Long userId);
 }
