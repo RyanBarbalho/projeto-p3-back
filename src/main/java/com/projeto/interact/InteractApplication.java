@@ -20,8 +20,8 @@ public class InteractApplication {
 	@Bean
 	CommandLineRunner run(UserRepository userRepository){
 		//usuarios de teste
-		UserModel u1 = new UserModel("User@gmail.com", "boglus", "123456", UserRole.valueOf("USER"));
-		UserModel u2 = new UserModel("brendanfraser@gmail.com", "brendan", "123456", UserRole.valueOf("ADMIN"));
+		UserModel u1 = new UserModel("User@gmail.com", "boglus", "$2a$10$0uBMt4CaJJayMk.tW7TKfuqLh/dMO1lHbjRBXpAvPxC/jcldVXbR.", UserRole.valueOf("USER"));
+		UserModel u2 = new UserModel("admin", "admin", "$2a$10$0uBMt4CaJJayMk.tW7TKfuqLh/dMO1lHbjRBXpAvPxC/jcldVXbR.", UserRole.valueOf("ADMIN"));
 		//inserir no banco de dados
 
 		return args -> {

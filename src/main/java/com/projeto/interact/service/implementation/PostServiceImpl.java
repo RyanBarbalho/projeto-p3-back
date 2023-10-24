@@ -113,8 +113,31 @@ public class PostServiceImpl implements PostService {
         return commentRepository.findAllByPostIdOrderByScoreDesc(id);
     }
 
+    @Override
+    public String getVoteStatus(PostModel post, Long userId) {
+        List<PostVoteModel> votes = post.getVotes();
+
+        for (PostVoteModel vote : votes) {
+            if (vote.getUser().getId().equals(userId)) {
+                int voteType = vote.getVoteType();
+                if (voteType == 1) {
+                    return "upvote";
+                } else if (voteType == -1) {
+                    return "downvote";
+                } else {
+                    return "neutral";
+                }
+            }
+        }
+
+        return "neutral";
+    }
 
     public List<PostModel> findByBoardId(Long id) {
         return postRepository.findAllByBoardIdOrderByScoreDesc(id);
+    }
+
+    public List<PostModel> search(String search) {
+        return postRepository.searchPosts(search);
     }
 }

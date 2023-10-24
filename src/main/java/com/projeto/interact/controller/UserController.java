@@ -32,10 +32,6 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    /*comentei pq n sei nem pq criei esse metodo.
-    List<UserModel> findAllByUsername(String username){
-    return service.findAllByUsername(username);
-    }*/
 
     @GetMapping("/{id}")
     UserModel getUser(@PathVariable Long id){
@@ -61,5 +57,15 @@ public class UserController {
     @GetMapping("/{username}/boards")
     public ResponseEntity<?> getUserBoardsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userBoardService.getUserBoardsByUsername(username));
+    }
+
+    @GetMapping("/{username}/posts")
+    public ResponseEntity<?> getUserPosts(@PathVariable String username) {
+        return ResponseEntity.ok(userBoardService.getUserPosts(username));
+    }
+
+    @GetMapping("/{username}/comments")
+    public ResponseEntity<?> getUserComments(@PathVariable String username) {
+        return ResponseEntity.ok(userBoardService.getUserComments(username));
     }
 }
