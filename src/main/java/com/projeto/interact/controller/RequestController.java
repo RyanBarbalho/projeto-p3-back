@@ -30,16 +30,19 @@ public class RequestController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createRequest(@RequestParam("pdfFile") MultipartFile pdfFile,@RequestParam("username") String username, @RequestParam("boardId") Long boardId){
+        System.out.println("Teste");
         try {
             // Valida dados
             if (pdfFile.isEmpty()  || username == null || boardId == null) {
                 return ResponseEntity.badRequest().body("Invalid request data.");
             }
             //cria e popula request
+            System.out.println("Teste 2");
             RequestModel request = new RequestModel();
             request.setUser(userService.findByUsername(username));
             request.setBoard(boardService.getBoard(boardId));
             request.setCertificate(pdfFile.getBytes());
+            System.out.println("Teste 3");
             requestService.createRequest(request);
             System.out.println("Teste");
             return ResponseEntity.ok().build();

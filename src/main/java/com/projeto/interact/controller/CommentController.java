@@ -44,16 +44,17 @@ public class CommentController {
         return service.downvoteComment(commentId, userId);
     }
 
-    @GetMapping("/posts/{id}")
-    public List<CommentResponseDTO> getAllCommentsByPostId(@PathVariable Long id) {
+    @GetMapping("/posts/{id}/{username}")
+    public List<CommentResponseDTO> getAllCommentsByPostId(@PathVariable Long id, @PathVariable String username) {
         List<CommentModel> commentModels = service.getAllByPostId(id);
-
+        Long userId = userService.findByUsername(username).getId();
         return commentModels.stream()
                 .map(commentModel -> new CommentResponseDTO(
                         commentModel.getId(),
                         commentModel.getText(),
                         commentModel.getUser().getUsername(),
-                        commentModel.getDate()
+                        commentModel.getDate(),
+                        service.getVoteStatus(commentModel, userId)
                 ))
                 .collect(Collectors.toList());
     }

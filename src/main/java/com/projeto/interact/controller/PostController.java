@@ -33,10 +33,12 @@ public class PostController {
 
 
     //getPOST
-    @GetMapping("/{id}")
-    public PostResponseDTO getPost(@PathVariable Long id){
+    @GetMapping("/{id}/{username}")
+    public PostResponseDTO getPost(@PathVariable Long id, @PathVariable String username){
         PostModel post = service.getPost(id);
-        return new PostResponseDTO(id, post.getTitle(), post.getText(), post.getUser().getUsername(), post.getDate());
+        Long userId = userService.findByUsername(username).getId();
+        String voteStatus = service.getVoteStatus(post, userId);
+        return new PostResponseDTO(id, post.getTitle(), post.getText(), post.getUser().getUsername(), post.getDate(), voteStatus);
     }
 
     //deletePOST
@@ -76,16 +78,34 @@ public class PostController {
         return service.getAllComments(id);
     }
 
-    @GetMapping("/board/{id}")
-    public List<PostResponseDTO> getAllById(@PathVariable Long id) {
+    @GetMapping("/board/{id}/{username}")
+    public List<PostResponseDTO> getAllById(@PathVariable Long id, @PathVariable String username) {
         List<PostModel> postModels = service.findByBoardId(id);
+        Long userId = userService.findByUsername(username).getId();
         return postModels.stream()
                 .map(postModel -> new PostResponseDTO(
                         postModel.getId(),
                         postModel.getTitle(),
                         postModel.getText(),
                         postModel.getUser().getUsername(),
-                        postModel.getDate()
+                        postModel.getDate(),
+                        service.getVoteStatus(postModel, userId)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/search/{search}/{username}")
+    public List<PostResponseDTO> search(@PathVariable String search, @PathVariable String username) {
+        List<PostModel> postModels = service.search(search);
+        Long userId = userService.findByUsername(username).getId();
+        return postModels.stream()
+                .map(postModel -> new PostResponseDTO(
+                        postModel.getId(),
+                        postModel.getTitle(),
+                        postModel.getText(),
+                        postModel.getUser().getUsername(),
+                        postModel.getDate(),
+                        service.getVoteStatus(postModel, userId)
                 ))
                 .collect(Collectors.toList());
     }

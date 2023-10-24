@@ -1,6 +1,8 @@
 package com.projeto.interact.service.implementation.userServices;
 
 import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.respository.UserRepository;
@@ -31,5 +33,15 @@ public class UserBoardService {
     public List<BoardModel> getUserBoardsByUsername(String username) {
         UserModel user = userRepository.findByUsername(username);
         return user.getBoards();
+    }
+
+    public  List<PostModel> getUserPosts(String username) {
+        UserModel user = userRepository.findByUsername(username);
+        return user.getPosts();
+    }
+
+    public  List<CommentModel> getUserComments(String username) {
+        UserModel user = userRepository.findByUsername(username);
+        return user.getComments();
     }
 }

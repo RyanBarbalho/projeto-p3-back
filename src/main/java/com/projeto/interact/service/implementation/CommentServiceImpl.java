@@ -2,6 +2,8 @@ package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.domain.comment.CommentVoteModel;
+import com.projeto.interact.domain.post.PostModel;
+import com.projeto.interact.domain.post.PostVoteModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.CommentVoteRepository;
 import com.projeto.interact.respository.UserRepository;
@@ -93,5 +95,25 @@ public class CommentServiceImpl implements CommentService {
 
         return votes.stream()
                 .anyMatch(vote -> vote.getUser().getId().equals(userId));
+    }
+
+    @Override
+    public String getVoteStatus(CommentModel comment, Long userId) {
+        List<CommentVoteModel> votes = comment.getVotes();
+
+        for (CommentVoteModel vote : votes) {
+            if (vote.getUser().getId().equals(userId)) {
+                int voteType = vote.getVoteType();
+                if (voteType == 1) {
+                    return "upvote";
+                } else if (voteType == -1) {
+                    return "downvote";
+                } else {
+                    return "neutral";
+                }
+            }
+        }
+
+        return "neutral";
     }
 }
