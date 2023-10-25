@@ -2,6 +2,7 @@ package com.projeto.interact.controller.authentication;
 
 import com.projeto.interact.domain.DTO.security.AuthenticationDTO;
 import com.projeto.interact.domain.DTO.security.LoginResponseDTO;
+import com.projeto.interact.domain.DTO.security.PasswordDTO;
 import com.projeto.interact.domain.DTO.security.RegisterDTO;
 import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.infra.security.TokenService;
@@ -92,5 +93,16 @@ public class AuthenticationController {
         this.userRepository.save(newUser);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/password")
+    public ResponseEntity<?> password(@RequestBody @Valid PasswordDTO dto) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
+        this.authenticationManager.authenticate(usernamePassword);
+        UserModel user = this.userRepository.findByUsername(dto.username());
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.newPassword());
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
+        return ResponseEntity.ok("Senha alterada com sucesso");
     }
 }

@@ -15,4 +15,5 @@ public class InteractApplication {
 		SpringApplication.run(InteractApplication.class, args);
 	}
 
+
 }
