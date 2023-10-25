@@ -27,6 +27,9 @@ public class ReportModel {
     @Column(nullable = false)
     private String reason;
 
+    @Column(name = "boardId")
+    private Long boardId;
+
     @Column(name = "id_post")
     private Long idPost;
 

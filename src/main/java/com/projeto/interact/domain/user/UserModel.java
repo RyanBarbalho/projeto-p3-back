@@ -45,6 +45,9 @@ public class UserModel implements UserDetails{
     @Column(name="role")
     private UserRole role;
 
+    @Column(name = "board_id")
+    private Long boardId;
+
     @Column(name="is_blocked", columnDefinition = "boolean default false", nullable = false)
     private boolean blocked;
 
@@ -56,6 +59,7 @@ public class UserModel implements UserDetails{
         this.password = password;
         this.score = 0;
         this.role = role;
+        this.boardId = null;
         this.blocked = false;
         this.blockedUntil = null;
     }

@@ -151,4 +151,6 @@ public class PostServiceImpl implements PostService {
     public List<PostModel> search(String search) {
         return postRepository.searchPosts(search);
     }
+
+    public List<PostModel> unanswered(Long id) {return postRepository.findPostsInBoardWithNoComments(id); }
 }

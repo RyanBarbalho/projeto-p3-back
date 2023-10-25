@@ -1,4 +1,6 @@
 package com.projeto.interact.domain.DTO.security;
 
-public record LoginResponseDTO(String token, String username) {
+import jakarta.annotation.Nullable;
+
+public record LoginResponseDTO(String token, String username, String role, @Nullable Long boardId) {
 }

@@ -33,6 +33,7 @@ public class PostController {
 
 
     //getPOST
+
     @GetMapping("/{id}/{username}")
     public PostResponseDTO getPost(@PathVariable Long id, @PathVariable String username){
         PostModel post = service.getPost(id);
@@ -108,5 +109,10 @@ public class PostController {
                         service.getVoteStatus(postModel, userId)
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/unanswered/{id}")
+    public List<PostModel> unanswered (@PathVariable Long id) {
+        return service.unanswered(id);
     }
 }

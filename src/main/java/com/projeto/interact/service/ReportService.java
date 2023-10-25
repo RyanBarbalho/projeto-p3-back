@@ -13,4 +13,6 @@ public interface ReportService {
 
     //getall
     List<ReportModel> findAll();
+
+    List<ReportModel> findAllByBoard(Long id);
 }

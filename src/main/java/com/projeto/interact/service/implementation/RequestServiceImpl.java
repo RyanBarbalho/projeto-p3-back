@@ -73,6 +73,7 @@ public class RequestServiceImpl implements RequestService {
         RequestModel requestModel = findEntityById(requestRepository, requestId , "Request");
         UserModel userModel = findEntityById(userRepository, requestModel.getUser().getId(), "User");
         userModel.setRole(UserRole.MONITOR);
+        userModel.setBoardId(requestModel.getBoard().getId());
         userRepository.save(userModel);
         requestRepository.deleteById(requestId);
     }

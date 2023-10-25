@@ -30,20 +30,22 @@ public class UserReportService {
 
     }
 
-    public ReportModel reportPost(Long userId, Long postId, String reason) {
+    public ReportModel reportPost(Long userId, Long postId, String reason, Long boardId) {
         ReportModel report = new ReportModel();
         report.setReason(reason);
         report.setIdPost(postId);
+        report.setBoardId(boardId);
         report.setUser(FindEntityUtil.findEntityById(userRepository, userId, "user"));
 
         return reportRepository.save(report);
     }
 
     //report comment
-    public ReportModel reportComment(Long userId, Long commentId, String reason) {
+    public ReportModel reportComment(Long userId, Long commentId, String reason, Long boardId) {
         ReportModel report = new ReportModel();
         report.setReason(reason);
         report.setIdComment(commentId);
+        report.setBoardId(boardId);
         report.setUser(FindEntityUtil.findEntityById(userRepository, userId, "user"));
 
         return reportRepository.save(report);

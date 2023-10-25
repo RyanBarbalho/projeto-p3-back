@@ -31,4 +31,6 @@ public interface PostService {
     String getVoteStatus(PostModel post, Long userId);
 
     List<PostModel> search(String search);
+
+    List<PostModel> unanswered(Long id);
 }
