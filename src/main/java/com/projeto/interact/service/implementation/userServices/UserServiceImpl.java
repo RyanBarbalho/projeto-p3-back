@@ -1,5 +1,7 @@
 package com.projeto.interact.service.implementation.userServices;
 
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.UserService;
@@ -47,4 +49,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public List<PostModel> getAllPostsByUsername(String username) {
+        return userRepository.findByUsername(username).getPosts();
+    }
+
+    @Override
+    public List<CommentModel> getAllCommentsByUsername(String username) {
+        return userRepository.findByUsername(username).getComments();
+    }
 }

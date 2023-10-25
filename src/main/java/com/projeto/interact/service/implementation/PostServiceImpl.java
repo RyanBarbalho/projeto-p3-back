@@ -3,6 +3,7 @@ package com.projeto.interact.service.implementation;
 import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.post.PostVoteModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.PostRepository;
 import com.projeto.interact.respository.PostVoteRepository;
@@ -64,6 +65,10 @@ public class PostServiceImpl implements PostService {
                 vote.setUser(userRepository.findById(userId).orElse(null));
                 vote.setVoteType(1);
                 postVoteRepository.save(vote);
+                //incrementa o score do user que fez o post
+                UserModel poster = post.getUser();
+                poster.setScore(poster.getScore() + 1);
+                userRepository.save(poster);
             }
         }
 
@@ -104,6 +109,12 @@ public class PostServiceImpl implements PostService {
         PostModel post = FindEntityUtil.findEntityById(postRepository, id, "post");
         comment.setPost(post);
         commentRepository.save(comment);
+
+        //incrementa score de usuario ao comentar
+        UserModel user = comment.getUser();
+        user.setScore(user.getScore() + 1);
+        userRepository.save(user);
+
         return post;
     }
 

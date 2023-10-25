@@ -62,4 +62,5 @@ public class UserController {
     public ResponseEntity<?> getUserComments(@PathVariable String username) {
         return ResponseEntity.ok(userBoardService.getUserComments(username));
     }
+
 }

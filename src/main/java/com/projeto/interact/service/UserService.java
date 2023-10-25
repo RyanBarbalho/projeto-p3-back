@@ -1,5 +1,7 @@
 package com.projeto.interact.service;
 
+import com.projeto.interact.domain.comment.CommentModel;
+import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.user.UserModel;
 
 import java.util.List;
@@ -16,4 +18,8 @@ public interface UserService {
     UserModel findByUsername(String username);
 
     List<UserModel> findAll();
+
+    List<PostModel> getAllPostsByUsername(String username);
+
+    List<CommentModel> getAllCommentsByUsername(String username);
 }

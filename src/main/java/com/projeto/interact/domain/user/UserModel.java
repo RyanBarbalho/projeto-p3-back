@@ -1,6 +1,7 @@
 package com.projeto.interact.domain.user;
 
 import com.projeto.interact.domain.BoardModel;
+import com.projeto.interact.domain.ReportModel;
 import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.domain.post.PostModel;
 import jakarta.persistence.*;
@@ -37,8 +38,9 @@ public class UserModel implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    @Column(name ="score")
-    private int pontuacao;
+    //eh incrementado ao postar, e receber upvotes, diminui ao ser bloqueado
+    @Column()
+    private int score;
 
     @Column(name="role")
     private UserRole role;
@@ -55,7 +57,7 @@ public class UserModel implements UserDetails{
         this.login = login;
         this.username = username;
         this.password = password;
-        this.pontuacao = 0;
+        this.score = 0;
         this.role = role;
         this.boardId = null;
         this.blocked = false;
@@ -73,6 +75,9 @@ public class UserModel implements UserDetails{
 
     @OneToMany(mappedBy = "user")
     private List<CommentModel> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<ReportModel> reports;
 
 
     @Override   //autoridade do sistema

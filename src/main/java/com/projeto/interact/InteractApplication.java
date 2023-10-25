@@ -15,18 +15,4 @@ public class InteractApplication {
 		SpringApplication.run(InteractApplication.class, args);
 	}
 
-
-
-	@Bean
-	CommandLineRunner run(UserRepository userRepository){
-		//usuarios de teste
-//		UserModel u1 = new UserModel("User@gmail.com", "boglus", "$2a$10$0uBMt4CaJJayMk.tW7TKfuqLh/dMO1lHbjRBXpAvPxC/jcldVXbR.", UserRole.valueOf("USER"));
-//		UserModel u2 = new UserModel("admin", "admin", "$2a$10$0uBMt4CaJJayMk.tW7TKfuqLh/dMO1lHbjRBXpAvPxC/jcldVXbR.", UserRole.valueOf("ADMIN"));
-		//inserir no banco de dados
-
-		return args -> {
-//			userRepository.save(u1);
-//			userRepository.save(u2);
-		};
-	}
 }
