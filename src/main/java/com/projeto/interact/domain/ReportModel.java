@@ -2,6 +2,7 @@ package com.projeto.interact.domain;
 
 //denuncias por usuario
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projeto.interact.domain.user.UserModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,8 @@ public class ReportModel {
     private Long timeout;
 
     //report so possui um user
-    @OneToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserModel user;
 

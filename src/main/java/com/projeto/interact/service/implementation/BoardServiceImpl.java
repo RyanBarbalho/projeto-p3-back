@@ -2,8 +2,10 @@ package com.projeto.interact.service.implementation;
 
 import com.projeto.interact.domain.BoardModel;
 import com.projeto.interact.domain.post.PostModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.BoardRepository;
 import com.projeto.interact.respository.PostRepository;
+import com.projeto.interact.respository.UserRepository;
 import com.projeto.interact.service.BoardService;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,12 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final PostRepository postRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository, PostRepository postRepository) {
+    private final UserRepository userRepository;
+
+    public BoardServiceImpl(BoardRepository boardRepository, PostRepository postRepository, UserRepository userRepository) {
         this.boardRepository = boardRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -55,6 +60,10 @@ public class BoardServiceImpl implements BoardService {
         //insert post at board
         board.getPosts().add(post);
         boardRepository.save(board);
+        //incrementa score de usuario ao postar
+        UserModel user = post.getUser();
+        user.setScore(user.getScore() + 1);
+        userRepository.save(user);
     }
 
     @Override

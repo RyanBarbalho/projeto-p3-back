@@ -50,8 +50,7 @@ public class UserReportService {
     }
 
     /**
-     * Bloqueia um usuário com base em uma denúncia e realiza operações relacionadas.
-     * <p>
+     * <p>Bloqueia um usuário com base em uma denúncia e realiza operações relacionadas.</p>
      *
      * @param reportId O ID do relatório que desencadeou o bloqueio do usuário.
      * @param timeout O tempo de bloqueio a ser aplicado ao usuário.
@@ -60,7 +59,6 @@ public class UserReportService {
      * @throws RuntimeException Se o relatório não puder ser encontrado ou se ocorrer
      *                      uma exceção durante o processamento.
      */
-
     @Transactional //coloquei parateste
     public ReportModel blockUser(Long reportId, Long timeout, String reason) {
         try{
@@ -77,6 +75,9 @@ public class UserReportService {
                 post.setTitle("Essa questão foi removida!");
                 post.setText("Essa questão foi removida!");
                 postRepository.save(post);
+                //usuario tem score zerado
+                user.setScore(0);
+                userRepository.save(user);
             }
             else{
                 CommentModel comment = FindEntityUtil.findEntityById(commentRepository, report.getIdComment(), "comment");
@@ -85,6 +86,9 @@ public class UserReportService {
                 userRepository.save(user);
                 comment.setText("Esta resposta foi removida!");
                 commentRepository.save(comment);
+                //usuario tem score zerado
+                user.setScore(0);
+                userRepository.save(user);
             }
 
             report.setReason(reason);

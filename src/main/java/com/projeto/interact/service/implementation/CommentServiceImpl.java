@@ -4,6 +4,7 @@ import com.projeto.interact.domain.comment.CommentModel;
 import com.projeto.interact.domain.comment.CommentVoteModel;
 import com.projeto.interact.domain.post.PostModel;
 import com.projeto.interact.domain.post.PostVoteModel;
+import com.projeto.interact.domain.user.UserModel;
 import com.projeto.interact.respository.CommentRepository;
 import com.projeto.interact.respository.CommentVoteRepository;
 import com.projeto.interact.respository.UserRepository;
@@ -57,6 +58,11 @@ public class CommentServiceImpl implements CommentService {
                 vote.setUser(userRepository.findById(userId).orElse(null));
                 vote.setVoteType(1); // 1 for upvote
                 commentVoteRepository.save(vote);
+
+                //dono do comentario ganha 1 ponto
+                UserModel user = comment.getUser();
+                user.setScore(user.getScore() + 1);
+                userRepository.save(user);
             }
         }
 
